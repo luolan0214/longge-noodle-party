@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Six party character stickers arranged on a cream scrapbook sheet">
+  <defs>
+    <pattern id="paperDots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="6" r="1.2" fill="#663C2A" opacity=".06"/>
+      <circle cx="19" cy="18" r=".9" fill="#E85D4A" opacity=".06"/>
+    </pattern>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#663C2A" flood-opacity=".16"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="#FFF8E8"/>
+  <rect width="1200" height="900" fill="url(#paperDots)"/>
+  <path d="M24 52C195 29 322 67 489 45s309 22 480-2c87-12 151-3 207 9" fill="none" stroke="#E9D6B8" stroke-width="4" stroke-dasharray="3 14" stroke-linecap="round"/>
+  <path d="M26 852c183 18 305-22 478 1s314-18 481 3c76 10 137 5 190-5" fill="none" stroke="#E9D6B8" stroke-width="4" stroke-dasharray="3 14" stroke-linecap="round"/>
+
+  <g filter="url(#cardShadow)">
+    <path d="M63 80 389 72 399 408 70 420Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+    <path d="M433 69 765 79 756 418 425 407Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+    <path d="M800 78 1134 70 1138 410 806 420Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+    <path d="M72 479 399 488 391 824 61 815Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+    <path d="M426 486 758 478 766 813 434 824Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+    <path d="M805 488 1137 480 1130 819 798 811Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="4" stroke-dasharray="8 10"/>
+  </g>
+
+  <g opacity=".88">
+    <path d="m145 63 113 2-4 33-113-2Z" fill="#F5C84C"/>
+    <path d="m516 62 114 4-5 32-113-3Z" fill="#F5B8C1"/>
+    <path d="m891 62 116-2 2 33-115 2Z" fill="#83A95C"/>
+    <path d="m142 469 114 4-4 32-114-3Z" fill="#E85D4A"/>
+    <path d="m520 468 114-2 2 33-114 2Z" fill="#F5C84C"/>
+    <path d="m891 470 115-3 3 33-115 3Z" fill="#F5B8C1"/>
+    <path d="M145 64v31m15-31v31m16-31v32m15-31v31m15-31v31m15-31v31m15-31v31m15-31v32" stroke="#FFF8E8" stroke-width="3" opacity=".3"/>
+  </g>
+
+  <image href="../characters/noodle-cat.svg" x="88" y="101" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../characters/product-bear.svg" x="451" y="101" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../characters/native-ghosts.svg" x="829" y="101" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../characters/ops-fluffy.svg" x="88" y="504" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../characters/blogger-dog.svg" x="451" y="504" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../characters/home-chef.svg" x="829" y="504" width="280" height="280" preserveAspectRatio="xMidYMid meet"/>
+
+  <g font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" text-anchor="middle" fill="#FFF8E8" stroke="#663C2A" stroke-width="3">
+    <circle cx="100" cy="382" r="25" fill="#E85D4A"/><text x="100" y="390" stroke="none">01</text>
+    <circle cx="463" cy="382" r="25" fill="#F5B8C1"/><text x="463" y="390" stroke="none" fill="#663C2A">02</text>
+    <circle cx="842" cy="382" r="25" fill="#83A95C"/><text x="842" y="390" stroke="none">03</text>
+    <circle cx="100" cy="783" r="25" fill="#E85D4A"/><text x="100" y="791" stroke="none">04</text>
+    <circle cx="463" cy="783" r="25" fill="#663C2A"/><text x="463" y="791" stroke="none">05</text>
+    <circle cx="842" cy="783" r="25" fill="#F5C84C"/><text x="842" y="791" stroke="none" fill="#663C2A">06</text>
+  </g>
+
+  <g fill="none" stroke="#663C2A" stroke-width="5" stroke-linecap="round" opacity=".45">
+    <path d="m27 185 18 10-18 10m1147-22-18 11 18 11M27 674l18 10-18 10m1147-21-18 11 18 11"/>
+  </g>
+</svg>

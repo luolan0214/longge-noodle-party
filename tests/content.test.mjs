@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { characters, eventDetails, micLines, parts } from '../js/content.js';
 
@@ -37,7 +37,7 @@ test('character roster uses the six public identities in guest and host order', 
   );
 });
 
-test('illustrated character and sharing assets use self-contained SVG files', async () => {
+test('illustrated character and sharing assets use local-only SVG files', async () => {
   assert.deepEqual(
     characters.map(({ image }) => image),
     [
@@ -64,6 +64,16 @@ test('illustrated character and sharing assets use self-contained SVG files', as
     assert.match(source, /^<svg\b/);
     assert.doesNotMatch(source, /(?:href|src)=["'](?:https?:|\/\/)/i);
   }));
+});
+
+test('sharing preview includes a real JPEG export', async () => {
+  const assetUrl = new URL('../assets/og/party-preview.jpg', import.meta.url);
+  const assetPath = fileURLToPath(assetUrl);
+  const assetStats = await stat(assetPath);
+  const signature = await readFile(assetPath, { encoding: null });
+
+  assert.equal(assetStats.isFile(), true);
+  assert.deepEqual([...signature.subarray(0, 3)], [0xff, 0xd8, 0xff]);
 });
 
 test('plan contains the six confirmed parts with continuous identifiers', () => {

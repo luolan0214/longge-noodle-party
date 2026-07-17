@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Cream scrapbook party preview with six characters and noodles">
+  <defs>
+    <pattern id="paper" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="8" r="1.2" fill="#663C2A" opacity=".06"/>
+      <path d="M22 2l3 3m-2 19 4 2M5 30l4-1" stroke="#E85D4A" stroke-width="1.4" opacity=".06"/>
+    </pattern>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#663C2A" flood-opacity=".17"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#FFF8E8"/>
+  <rect width="1200" height="630" fill="url(#paper)"/>
+  <path d="M0 493c194-63 336 9 499-20 169-31 268-70 418-30 103 28 194 16 283-22v209H0Z" fill="#F5C84C" opacity=".24"/>
+  <path d="M0 536c169-38 304 7 463-10 198-22 313-52 484-22 93 17 176 13 253-10v136H0Z" fill="#E85D4A" opacity=".14"/>
+
+  <path d="m75 32 173 7-7 47-173-7Z" fill="#F5C84C" opacity=".8" transform="rotate(-4 158 59)"/>
+  <path d="m1000 36 137-6 3 45-137 6Z" fill="#F5B8C1" opacity=".82" transform="rotate(5 1070 56)"/>
+  <path d="M48 290c29-24 56-24 82 0s53 25 81 0" fill="none" stroke="#83A95C" stroke-width="8" stroke-linecap="round" stroke-dasharray="3 18"/>
+
+  <text x="82" y="160" fill="#663C2A" font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="66" font-weight="900" letter-spacing="2">周日来家里吃面吧！</text>
+  <text x="86" y="239" fill="#E85D4A" font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="40" font-weight="800" letter-spacing="3">龙哥炸酱面 · 好友聚会</text>
+
+  <g filter="url(#lift)" transform="rotate(-1 745 440)">
+    <path d="M280 285 1162 300 1152 580 289 565Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="5" stroke-dasharray="9 11"/>
+    <path d="M298 309c224-26 602-22 838 12" fill="none" stroke="#F5B8C1" stroke-width="10" opacity=".55" stroke-linecap="round"/>
+    <image href="../characters/noodle-cat.svg" x="300" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/product-bear.svg" x="438" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/native-ghosts.svg" x="576" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/ops-fluffy.svg" x="714" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/blogger-dog.svg" x="852" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/home-chef.svg" x="990" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <g transform="translate(71 342) rotate(3 92 95)" filter="url(#lift)">
+    <ellipse cx="94" cy="80" rx="93" ry="31" fill="#FFFDF7" stroke="#663C2A" stroke-width="7"/>
+    <path d="M8 82c8 78 36 111 86 111s78-33 86-111" fill="#E85D4A" stroke="#663C2A" stroke-width="7"/>
+    <path d="M27 78c17-29 33-10 52-34 18 24 36 4 58 34" fill="none" stroke="#C8792C" stroke-width="11" stroke-linecap="round"/>
+    <path d="M35 70c15-13 26 3 42-13 15 16 31 0 48 13" fill="none" stroke="#F5C84C" stroke-width="7" stroke-linecap="round"/>
+    <path d="M67 30c-15-18 10-28 0-45m47 43c15-18-10-28 1-46" fill="none" stroke="#663C2A" stroke-width="7" stroke-linecap="round" opacity=".35"/>
+  </g>
+
+  <g fill="#E85D4A" stroke="#663C2A" stroke-width="3">
+    <path d="m244 345 10 19 21 3-15 15 4 21-20-10-19 10 4-21-16-15 22-3Z"/>
+    <circle cx="1136" cy="171" r="11" fill="#83A95C"/>
+    <path d="m1083 216 23-16 9 28Z" fill="#F5B8C1"/>
+    <path d="m238 529 21-14 7 25Z" fill="#F5C84C"/>
+  </g>
+  <circle cx="1122" cy="190" r="52" fill="none" stroke="#E85D4A" stroke-width="7" stroke-dasharray="6 10" opacity=".5"/>
+</svg>
