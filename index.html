@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>周日面聚会邀请</title>
+    <meta name="description" content="2026 年 7 月 19 日，来家里吃龙哥炸酱面，和朋友一起过个热闹周日。">
+    <meta name="theme-color" content="#fff8e8">
+    <meta property="og:title" content="周日来家里吃面吧！">
+    <meta property="og:description" content="龙哥炸酱面 · 好友聚会，2026.07.19 周日。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/og/party-preview.jpg">
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <nav class="top-tools" aria-label="邀请函工具">
+      <button type="button" data-action="toggle-sound" aria-pressed="false" aria-label="开启声音">🔇 <span>声音</span></button>
+      <button type="button" data-action="share">分享邀请</button>
+    </nav>
+
+    <main id="main-content">
+      <header class="cover" aria-labelledby="invitation-title">
+        <p class="cover__eyebrow">龙哥炸酱面 · 好友聚会</p>
+        <h1 id="invitation-title">周日来家里吃面吧！</h1>
+        <time datetime="2026-07-19">2026.07.19 周日</time>
+        <div class="cover__door" aria-label="两位主人在门口等你">
+          <img src="assets/characters/blogger-dog.svg" alt="小红书千粉博主">
+          <button type="button" data-action="doorbell" aria-label="按门铃">🔔 按门铃</button>
+          <img src="assets/characters/home-chef.svg" alt="家庭煮夫">
+        </div>
+        <p>两位主人已就位，门铃一响就开门。</p>
+      </header>
+
+      <section class="roster" aria-labelledby="guest-list-title">
+        <h2 id="guest-list-title">TODAY'S GUEST LIST</h2>
+        <div class="roster__grid roster__grid--guests">
+          <figure data-roster-role="guest">
+            <img src="assets/characters/noodle-cat.svg" alt="炸酱面主理人">
+            <figcaption><strong>炸酱面主理人</strong><span>15:00–16:00</span></figcaption>
+          </figure>
+          <figure data-roster-role="guest">
+            <img src="assets/characters/product-bear.svg" alt="AI Builder、产品负责人">
+            <figcaption><strong>AI Builder、产品负责人</strong><span>15:00–16:00</span></figcaption>
+          </figure>
+          <figure data-roster-role="guest">
+            <img src="assets/characters/native-ghosts.svg" alt="AI Native 连续创业者">
+            <figcaption><strong>AI Native 连续创业者</strong><span>17:00 特别登场</span></figcaption>
+          </figure>
+          <figure data-roster-role="guest">
+            <img src="assets/characters/ops-fluffy.svg" alt="AI 运营负责人">
+            <figcaption><strong>AI 运营负责人</strong><span>15:00–16:00</span></figcaption>
+          </figure>
+        </div>
+
+        <h2>今日主人组 · 已就位 ✓</h2>
+        <div class="roster__grid roster__grid--hosts">
+          <figure data-roster-role="host">
+            <img src="assets/characters/blogger-dog.svg" alt="小红书千粉博主">
+            <figcaption><strong>小红书千粉博主</strong><span>已就位 ✓</span></figcaption>
+          </figure>
+          <figure data-roster-role="host">
+            <img src="assets/characters/home-chef.svg" alt="家庭煮夫">
+            <figcaption><strong>家庭煮夫</strong><span>已就位 ✓</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="arrival-notes" aria-labelledby="arrival-title">
+        <h2 id="arrival-title">到场时间</h2>
+        <p><strong>大部队：15:00–16:00</strong></p>
+        <p><strong>AI Native 连续创业者：17:00 特别登场</strong></p>
+      </section>
+
+      <section class="address-card" aria-labelledby="address-title">
+        <h2 id="address-title">来这里集合</h2>
+        <address id="party-address">北京市昌平区风雅园一区 15 号楼 1 单元 303</address>
+        <div class="address-card__actions">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E4%BA%AC%E5%B8%82%E6%98%8C%E5%B9%B3%E5%8C%BA%E9%A3%8E%E9%9B%85%E5%9B%AD%E4%B8%80%E5%8C%BA%2015%20%E5%8F%B7%E6%A5%BC%201%20%E5%8D%95%E5%85%83%20303" target="_blank" rel="noreferrer">Google 地图导航</a>
+          <button type="button" data-action="copy-address" data-copy-target="party-address">复制地址</button>
+        </div>
+      </section>
+
+      <section class="plan" aria-labelledby="plan-title">
+        <h2 id="plan-title">TODAY'S PLAN</h2>
+
+        <article class="plan-card" data-part-id="part-01">
+          <button id="part-01-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-01-panel">
+            <span>PART 01 · 到家集合</span><span>放下包包，先随便坐！</span>
+          </button>
+          <div id="part-01-panel" role="region" aria-labelledby="part-01-button" class="plan-card__panel">
+            <p>零食桌已经摆好：</p>
+            <div class="snack-game">
+              <button type="button" data-action="open-snack-bag">🍿 零食袋</button>
+              <span>🍬 糖果罐</span><span>🥤 饮料</span><span>🍎 水果篮</span>
+            </div>
+            <p>食材和零食都准备好啦，大家带着嘴来就好！</p>
+            <p class="stamp" data-stamp>顺利会师</p>
+          </div>
+        </article>
+
+        <article class="plan-card" data-part-id="part-02">
+          <button id="part-02-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-02-panel">
+            <span>PART 02 · 龙哥开饭</span><span>今日主角：龙哥牌炸酱面</span>
+          </button>
+          <div id="part-02-panel" role="region" aria-labelledby="part-02-button" class="plan-card__panel">
+            <p>选好四样配菜，把自己的那碗面拌香。</p>
+            <div class="noodle-game__toppings" aria-label="炸酱面配菜">
+              <button type="button" data-topping="cucumber" aria-pressed="false">黄瓜丝</button>
+              <button type="button" data-topping="carrot" aria-pressed="false">胡萝卜丝</button>
+              <button type="button" data-topping="sprouts" aria-pressed="false">豆芽</button>
+              <button type="button" data-topping="sauce" aria-pressed="false">炸酱</button>
+            </div>
+            <button type="button" data-action="noodle-bowl" aria-label="炸酱面面碗">🍜 面碗</button>
+            <p class="stamp" data-stamp>香迷糊了</p>
+          </div>
+        </article>
+
+        <article class="plan-card" data-part-id="part-03">
+          <button id="part-03-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-03-panel">
+            <span>PART 03 · 咔嚃留念</span><span>吃面不拍照，等于没吃到！</span>
+          </button>
+          <div id="part-03-panel" role="region" aria-labelledby="part-03-button" class="plan-card__panel">
+            <div class="camera-game__preview" aria-label="六人合影预览">
+              <img data-photo-character="noodle-cat" src="assets/characters/noodle-cat.svg" alt="炸酱面主理人">
+              <img data-photo-character="product-bear" src="assets/characters/product-bear.svg" alt="AI Builder、产品负责人">
+              <img data-photo-character="native-ghosts" src="assets/characters/native-ghosts.svg" alt="AI Native 连续创业者">
+              <img data-photo-character="ops-fluffy" src="assets/characters/ops-fluffy.svg" alt="AI 运营负责人">
+              <img data-photo-character="blogger-dog" src="assets/characters/blogger-dog.svg" alt="小红书千粉博主">
+              <img data-photo-character="home-chef" src="assets/characters/home-chef.svg" alt="家庭煮夫">
+            </div>
+            <button type="button" data-action="camera-shutter">📸 按下快门</button>
+            <button type="button" data-action="save-photo">保存合影</button>
+            <button type="button" data-action="retake-photo">再拍一张</button>
+            <p class="stamp" data-stamp>今日份回忆</p>
+          </div>
+        </article>
+
+        <article class="plan-card" data-part-id="part-04">
+          <button id="part-04-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-04-panel">
+            <span>PART 04 · 水果时间</span><span>饭后水果，给胃留个甜甜的结尾。</span>
+          </button>
+          <div id="part-04-panel" role="region" aria-labelledby="part-04-button" class="plan-card__panel">
+            <button type="button" data-action="slice-watermelon" aria-label="切开西瓜">🍉 西瓜</button>
+            <div class="watermelon-game__slices" aria-label="六瓣西瓜">
+              <span data-watermelon-slice="1">西瓜第一瓣</span><span data-watermelon-slice="2">西瓜第二瓣</span>
+              <span data-watermelon-slice="3">西瓜第三瓣</span><span data-watermelon-slice="4">西瓜第四瓣</span>
+              <span data-watermelon-slice="5">西瓜第五瓣</span><span data-watermelon-slice="6">西瓜第六瓣</span>
+            </div>
+            <p class="stamp" data-stamp>水果自由</p>
+          </div>
+        </article>
+
+        <article class="plan-card" data-part-id="part-05">
+          <button id="part-05-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-05-panel">
+            <span>PART 05 · 麦克风时间</span><span>吐槽大会 × 家庭脱口秀</span>
+          </button>
+          <div id="part-05-panel" role="region" aria-labelledby="part-05-button" class="plan-card__panel">
+            <button type="button" data-action="pass-mic">🎤 递麦</button>
+            <p data-mic-bubble aria-live="polite">这个可以说吗？</p>
+            <p class="stamp" data-stamp>全场最佳</p>
+          </div>
+        </article>
+
+        <article class="plan-card" data-part-id="part-06">
+          <button id="part-06-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-06-panel">
+            <span>PART 06 · 快乐散场</span><span>吃饱了，也笑累了。</span>
+          </button>
+          <div id="part-06-panel" role="region" aria-labelledby="part-06-button" class="plan-card__panel">
+            <p>拖动月亮，把黄昏慢慢送进夜里。</p>
+            <div class="moon-game__track" data-moon-track="">
+              <span aria-hidden="true">🌙</span>
+              <input type="range" min="0" max="100" value="0" aria-label="月亮升起进度" data-moon-range>
+            </div>
+            <button type="button" data-action="moon-keyboard-step">让月亮升起</button>
+            <button type="button" data-action="door-light" aria-pressed="false">💡 点亮门灯</button>
+            <p data-door-light-message>下次还来吃面！</p>
+            <p class="stamp" data-stamp>平安到家</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="group-photo" aria-labelledby="group-photo-title" data-photo-lock>
+        <p class="group-photo__lock">🔒 六个环节全部翻阅后解锁合影</p>
+        <h2 id="group-photo-title">周日合影</h2>
+        <img src="assets/characters/group-photo.png" alt="四位客人与两位主人的聚会合影">
+        <p>普通的一顿饭，因为是我们，就变成了值得保存的一天。</p>
+        <p><strong>明天见，不见不散！</strong></p>
+        <button type="button" data-action="replay">重新玩一遍</button>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <noscript><p>互动功能不可用，但日期、地址、阵容和六个环节的邀请信息仍可阅读。</p></noscript>
+  </body>
+</html>
