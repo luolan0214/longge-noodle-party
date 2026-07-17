@@ -19,7 +19,7 @@ test('document declares Chinese metadata and relative Open Graph artwork', () =>
   assert.match(html, /<html\b[^>]*\blang=["']zh-CN["']/i);
   assert.match(html, /<meta\b[^>]*\bcharset=["']utf-8["']/i);
   assert.match(html, /<meta\b[^>]*\bname=["']viewport["'][^>]*\bcontent=["'][^"']*width=device-width/i);
-  assert.match(html, /<title>[^<]*[周日面聚会邀请][^<]*<\/title>/i);
+  assert.ok(html.includes('<title>周日面聚会邀请</title>'));
   assert.match(html, openingTagWith('name', 'description'));
   assert.match(html, openingTagWith('name', 'theme-color'));
 
@@ -86,8 +86,7 @@ test('plan provides exactly six accessible, fully visible fallback articles', ()
     assert.doesNotMatch(article, new RegExp(`<[^>]+\\bid=["']${panelId}["'][^>]*\\bhidden(?:\\s|=|>)`, 'i'));
   });
 
-  assert.match(articles[0], /aria-expanded=["']true["']/i);
-  articles.slice(1).forEach((article) => assert.match(article, /aria-expanded=["']false["']/i));
+  articles.forEach((article) => assert.match(article, /aria-expanded=["']true["']/i));
 });
 
 test('plan uses all six confirmed titles in order', () => {
@@ -148,6 +147,27 @@ test('critical accessibility and no-script fallbacks are explicit', () => {
   const images = html.match(/<img\b[^>]*>/gi) ?? [];
   assert.ok(images.length >= 13);
   images.forEach((image) => assert.match(image, /\balt=["'][^"']+["']/i));
+});
+
+test('document IDs are unique and ARIA ID references resolve', () => {
+  const ids = [...html.matchAll(/<[^>]+\sid=["']([^"']+)["'][^>]*>/gi)].map((match) => match[1]);
+  const idSet = new Set(ids);
+
+  assert.equal(idSet.size, ids.length, 'document IDs must be unique');
+  for (const attribute of ['aria-controls', 'aria-labelledby']) {
+    const references = [...html.matchAll(new RegExp(`\\b${attribute}=["']([^"']+)["']`, 'gi'))]
+      .flatMap((match) => match[1].trim().split(/\s+/));
+    references.forEach((reference) => {
+      assert.ok(idSet.has(reference), `${attribute} references missing ID: ${reference}`);
+    });
+  }
+});
+
+test('generic containers with accessible names expose a group role', () => {
+  const namedDivs = html.match(/<div\b(?=[^>]*\baria-label=["'][^"']+["'])[^>]*>/gi) ?? [];
+
+  assert.ok(namedDivs.length > 0);
+  namedDivs.forEach((tag) => assert.match(tag, /\brole=["']group["']/i));
 });
 
 test('local resources are subpath-safe and source excludes protected names', () => {

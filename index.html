@@ -29,7 +29,7 @@
         <p class="cover__eyebrow">龙哥炸酱面 · 好友聚会</p>
         <h1 id="invitation-title">周日来家里吃面吧！</h1>
         <time datetime="2026-07-19">2026.07.19 周日</time>
-        <div class="cover__door" aria-label="两位主人在门口等你">
+        <div class="cover__door" role="group" aria-label="两位主人在门口等你">
           <img src="assets/characters/blogger-dog.svg" alt="小红书千粉博主">
           <button type="button" data-action="doorbell" aria-label="按门铃">🔔 按门铃</button>
           <img src="assets/characters/home-chef.svg" alt="家庭煮夫">
@@ -105,12 +105,12 @@
         </article>
 
         <article class="plan-card" data-part-id="part-02">
-          <button id="part-02-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-02-panel">
+          <button id="part-02-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-02-panel">
             <span>PART 02 · 龙哥开饭</span><span>今日主角：龙哥牌炸酱面</span>
           </button>
           <div id="part-02-panel" role="region" aria-labelledby="part-02-button" class="plan-card__panel">
             <p>选好四样配菜，把自己的那碗面拌香。</p>
-            <div class="noodle-game__toppings" aria-label="炸酱面配菜">
+            <div class="noodle-game__toppings" role="group" aria-label="炸酱面配菜">
               <button type="button" data-topping="cucumber" aria-pressed="false">黄瓜丝</button>
               <button type="button" data-topping="carrot" aria-pressed="false">胡萝卜丝</button>
               <button type="button" data-topping="sprouts" aria-pressed="false">豆芽</button>
@@ -122,11 +122,11 @@
         </article>
 
         <article class="plan-card" data-part-id="part-03">
-          <button id="part-03-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-03-panel">
+          <button id="part-03-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-03-panel">
             <span>PART 03 · 咔嚓留念</span><span>吃面不拍照，等于没吃到！</span>
           </button>
           <div id="part-03-panel" role="region" aria-labelledby="part-03-button" class="plan-card__panel">
-            <div class="camera-game__preview" aria-label="六人合影预览">
+            <div class="camera-game__preview" role="group" aria-label="六人合影预览">
               <img data-photo-character="noodle-cat" src="assets/characters/noodle-cat.svg" alt="炸酱面主理人">
               <img data-photo-character="product-bear" src="assets/characters/product-bear.svg" alt="AI Builder、产品负责人">
               <img data-photo-character="native-ghosts" src="assets/characters/native-ghosts.svg" alt="AI Native 连续创业者">
@@ -142,12 +142,12 @@
         </article>
 
         <article class="plan-card" data-part-id="part-04">
-          <button id="part-04-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-04-panel">
+          <button id="part-04-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-04-panel">
             <span>PART 04 · 水果时间</span><span>饭后水果，给胃留个甜甜的结尾。</span>
           </button>
           <div id="part-04-panel" role="region" aria-labelledby="part-04-button" class="plan-card__panel">
             <button type="button" data-action="slice-watermelon" aria-label="切开西瓜">🍉 西瓜</button>
-            <div class="watermelon-game__slices" aria-label="六瓣西瓜">
+            <div class="watermelon-game__slices" role="group" aria-label="六瓣西瓜">
               <span data-watermelon-slice="1">西瓜第一瓣</span><span data-watermelon-slice="2">西瓜第二瓣</span>
               <span data-watermelon-slice="3">西瓜第三瓣</span><span data-watermelon-slice="4">西瓜第四瓣</span>
               <span data-watermelon-slice="5">西瓜第五瓣</span><span data-watermelon-slice="6">西瓜第六瓣</span>
@@ -157,7 +157,7 @@
         </article>
 
         <article class="plan-card" data-part-id="part-05">
-          <button id="part-05-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-05-panel">
+          <button id="part-05-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-05-panel">
             <span>PART 05 · 麦克风时间</span><span>吐槽大会 × 家庭脱口秀</span>
           </button>
           <div id="part-05-panel" role="region" aria-labelledby="part-05-button" class="plan-card__panel">
@@ -168,7 +168,7 @@
         </article>
 
         <article class="plan-card" data-part-id="part-06">
-          <button id="part-06-button" type="button" class="plan-card__toggle" aria-expanded="false" aria-controls="part-06-panel">
+          <button id="part-06-button" type="button" class="plan-card__toggle" aria-expanded="true" aria-controls="part-06-panel">
             <span>PART 06 · 快乐散场</span><span>吃饱了，也笑累了。</span>
           </button>
           <div id="part-06-panel" role="region" aria-labelledby="part-06-button" class="plan-card__panel">
