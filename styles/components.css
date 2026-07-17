@@ -40,6 +40,14 @@
   background-size: 1.15rem;
 }
 
+.top-tools button[data-action="toggle-sound"] {
+  padding-left: 2.25rem;
+  background-image: url("../assets/icons/sound.svg");
+  background-repeat: no-repeat;
+  background-position: 0.7rem center;
+  background-size: 1.15rem;
+}
+
 .top-tools button:hover,
 .address-card__actions :is(a, button):hover,
 .plan-card__panel button:hover,
@@ -88,7 +96,7 @@
   padding: var(--space-1) var(--space-3);
   border: 1px dashed var(--color-ink);
   border-radius: var(--radius-round);
-  color: var(--color-tomato);
+  color: var(--color-accent-text);
   font-size: var(--text-sm);
   font-weight: 900;
   letter-spacing: 0.06em;
@@ -212,7 +220,7 @@
 
 .roster figcaption span {
   margin-top: var(--space-1);
-  color: var(--color-tomato);
+  color: var(--color-accent-text);
   font-size: var(--text-xs);
   font-weight: 800;
 }
@@ -270,7 +278,7 @@
 
 .address-card h2 {
   margin-bottom: var(--space-3);
-  color: var(--color-tomato);
+  color: var(--color-accent-text);
 }
 
 .address-card address {
@@ -404,7 +412,7 @@
 }
 
 .plan-card__toggle > span:first-child {
-  color: var(--color-tomato);
+  color: var(--color-accent-text);
   font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: 900;
@@ -461,8 +469,20 @@
 }
 
 .noodle-game__toppings button[aria-pressed="true"] {
-  background: var(--color-cucumber);
-  color: var(--color-paper-light);
+  border-color: var(--color-ink);
+  color: var(--color-white);
+  background: var(--color-cucumber-deep);
+  box-shadow: 0 0 0 2px var(--color-paper-light), 0 3px 0 var(--color-ink);
+  translate: 0 -1px;
+}
+
+.noodle-game__toppings button[aria-pressed="true"]:hover {
+  background: var(--color-cucumber-deep);
+}
+
+.noodle-game__toppings button[aria-pressed="true"]:active {
+  box-shadow: inset 0 2px 0 rgb(0 0 0 / 22%);
+  translate: 0 2px;
 }
 
 .camera-game__preview {
@@ -568,8 +588,8 @@
 }
 
 .js .plan-card.is-completed .stamp {
-  border: 3px double var(--color-tomato);
-  color: var(--color-tomato);
+  border: 3px double var(--color-accent-text);
+  color: var(--color-accent-text);
   filter: none;
   opacity: 1;
   rotate: -5deg;
@@ -619,7 +639,7 @@
 }
 
 .group-photo h2 {
-  color: var(--color-tomato);
+  color: var(--color-accent-text);
 }
 
 .group-photo img {

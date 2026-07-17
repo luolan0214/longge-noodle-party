@@ -55,7 +55,55 @@ test('stamp styling distinguishes fallback, viewed, and completed states', async
   );
   assert.match(
     components,
-    /\.js\s+\.plan-card\.is-completed\s+\.stamp\s*\{[^}]*color\s*:\s*var\(--color-tomato\)[^}]*rotate\s*:/s,
+    /\.js\s+\.plan-card\.is-completed\s+\.stamp\s*\{[^}]*color\s*:\s*var\(--color-accent-text\)[^}]*rotate\s*:/s,
   );
   assert.doesNotMatch(animations, /\.plan-card\.is-viewed\s+\.stamp\s*\{[^}]*animation\s*:\s*stamp-pop/s);
+});
+
+test('small accent text and selected toppings use AA contrast colors', async () => {
+  const [tokens, components] = await Promise.all([
+    read('styles/tokens.css'),
+    read('styles/components.css'),
+  ]);
+  const token = (name) => tokens.match(new RegExp(`--${name}\\s*:\\s*(#[0-9a-f]{6})`, 'i'))?.[1];
+  const luminance = (hex) => {
+    const [red, green, blue] = hex.match(/[0-9a-f]{2}/gi)
+      .map((channel) => Number.parseInt(channel, 16) / 255)
+      .map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4));
+    return (0.2126 * red) + (0.7152 * green) + (0.0722 * blue);
+  };
+  const contrast = (foreground, background) => {
+    const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+    return (values[0] + 0.05) / (values[1] + 0.05);
+  };
+  const accentText = token('color-accent-text');
+  const paper = token('color-paper');
+  const white = token('color-white');
+  const cucumberDeep = token('color-cucumber-deep');
+
+  assert.ok(accentText && paper && white && cucumberDeep, 'missing AA contrast color token');
+  assert.ok(contrast(accentText, paper) >= 4.5);
+  assert.ok(contrast(white, cucumberDeep) >= 4.5);
+  for (const selector of [
+    '.cover__eyebrow',
+    '.roster figcaption span',
+    '.plan-card__toggle > span:first-child',
+    '.js .plan-card.is-completed .stamp',
+  ]) {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    assert.match(components, new RegExp(`${escaped}\\s*\\{[^}]*color\\s*:\\s*var\\(--color-accent-text\\)`, 's'));
+  }
+  assert.match(
+    components,
+    /\.noodle-game__toppings button\[aria-pressed="true"\]\s*\{(?=[^}]*background\s*:\s*var\(--color-cucumber-deep\))(?=[^}]*color\s*:\s*var\(--color-white\))[^}]*\}/s,
+  );
+});
+
+test('sound control uses the local hand-drawn icon without replacing its label', async () => {
+  const components = await read('styles/components.css');
+
+  assert.match(
+    components,
+    /\.top-tools button\[data-action="toggle-sound"\]\s*\{[^}]*background-image\s*:\s*url\("\.\.\/assets\/icons\/sound\.svg"\)/s,
+  );
 });
