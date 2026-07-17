@@ -35,3 +35,27 @@ test('hand-drawn utility icons are local standalone SVG artwork', async () => {
     assert.doesNotMatch(svg, /(?:href|src)=["'](?:https?:|\/\/)/i);
   }
 });
+
+test('stamp styling distinguishes fallback, viewed, and completed states', async () => {
+  const [html, components, animations] = await Promise.all([
+    read('index.html'),
+    read('styles/components.css'),
+    read('styles/animations.css'),
+  ]);
+
+  assert.match(html, /<p class="stamp" data-stamp>\S+/);
+  assert.match(components, /\.js\s+\.stamp\s*\{[^}]*opacity\s*:/s);
+  assert.match(
+    components,
+    /\.js\s+\.plan-card\.is-viewed:not\(\.is-completed\)\s+\.stamp::before\s*\{[^}]*content\s*:\s*[“"']已翻阅\s*·\s*[”"']/s,
+  );
+  assert.match(
+    components,
+    /\.js\s+\.plan-card\.is-completed\s+\.stamp::before\s*\{[^}]*content\s*:\s*[“"']✓\s+[”"']/s,
+  );
+  assert.match(
+    components,
+    /\.js\s+\.plan-card\.is-completed\s+\.stamp\s*\{[^}]*color\s*:\s*var\(--color-tomato\)[^}]*rotate\s*:/s,
+  );
+  assert.doesNotMatch(animations, /\.plan-card\.is-viewed\s+\.stamp\s*\{[^}]*animation\s*:\s*stamp-pop/s);
+});
