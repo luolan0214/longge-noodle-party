@@ -1,4 +1,4 @@
-/* Short, one-shot motion only; the invitation never loops decoration. */
+/* All motion is short, one-shot feedback; decoration never loops. */
 .top-tools button,
 .address-card__actions a,
 .address-card__actions button,
@@ -20,38 +20,278 @@
   rotate: 5deg;
 }
 
-.stamp[data-completed="true"] {
-  animation: stamp-in 420ms cubic-bezier(0.18, 0.9, 0.32, 1.25) both;
+/* Doorbell and host welcome */
+[data-action="doorbell"].is-ringing,
+[data-action="doorbell"][data-active="true"],
+.cover__door.is-ringing [data-action="doorbell"] {
+  animation: doorbell-wiggle 560ms ease-in-out both;
+}
+
+.cover__door.is-ringing img,
+.cover__door.is-open img,
+.cover__door[data-welcomed="true"] img {
+  animation: host-peek 620ms cubic-bezier(0.2, 0.82, 0.3, 1.15) both;
+}
+
+.cover__door.is-ringing img:last-child,
+.cover__door.is-open img:last-child,
+.cover__door[data-welcomed="true"] img:last-child {
+  animation-delay: 90ms;
+}
+
+/* Roster stickers */
+.roster.is-entering figure,
+.roster[data-animate="true"] figure,
+[data-roster-role].is-entering {
+  animation: sticker-drop 580ms cubic-bezier(0.2, 0.85, 0.28, 1.12) both;
+}
+
+.roster.is-entering figure:nth-child(2),
+.roster[data-animate="true"] figure:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.roster.is-entering figure:nth-child(3),
+.roster[data-animate="true"] figure:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.roster.is-entering figure:nth-child(4),
+.roster[data-animate="true"] figure:nth-child(4) {
+  animation-delay: 210ms;
+}
+
+/* PART 01: snack burst */
+.snack-game.is-open > span,
+.snack-game[data-open="true"] > span,
+.snack-game__pop,
+.snack-game [aria-hidden="true"].is-popping {
+  animation: snack-pop 520ms cubic-bezier(0.18, 0.88, 0.36, 1.2) both;
+}
+
+.snack-game.is-open > :nth-child(3),
+.snack-game[data-open="true"] > :nth-child(3) {
+  animation-delay: 55ms;
+}
+
+.snack-game.is-open > :nth-child(4),
+.snack-game[data-open="true"] > :nth-child(4) {
+  animation-delay: 110ms;
+}
+
+/* PART 02: toppings and heart-shaped steam */
+.noodle-game__toppings button[aria-pressed="true"],
+[data-topping].is-added {
+  animation: topping-drop 430ms cubic-bezier(0.24, 0.78, 0.34, 1.18) both;
+}
+
+[data-action="noodle-bowl"].is-steaming,
+[data-action="noodle-bowl"].is-complete,
+.noodle-game.is-complete [data-action="noodle-bowl"] {
+  position: relative;
+  animation: bowl-happy 500ms ease-out both;
+}
+
+[data-action="noodle-bowl"].is-steaming::after,
+[data-action="noodle-bowl"].is-complete::after,
+.noodle-game.is-complete [data-action="noodle-bowl"]::after {
+  position: absolute;
+  right: 10%;
+  bottom: 72%;
+  color: var(--color-tomato);
+  content: "♥";
+  font-size: 1.35rem;
+  pointer-events: none;
+  animation: steam-heart 760ms ease-out both;
+}
+
+/* PART 03: camera flash and instant-photo eject */
+.camera-game__preview.is-flashing,
+.camera-game__preview[data-flash="true"] {
+  position: relative;
+  animation: camera-flash 360ms ease-out both;
+}
+
+.camera-game__preview.is-flashing::after,
+.camera-game__preview[data-flash="true"]::after {
+  position: absolute;
+  inset: -8px;
+  z-index: 2;
+  background: var(--color-white);
+  content: "";
+  pointer-events: none;
+  animation: flash-overlay 360ms ease-out both;
+}
+
+.camera-game__preview.is-shot,
+.camera-game__preview.is-ejecting,
+.camera-game__preview[data-photo-ready="true"] {
+  animation: photo-eject 720ms cubic-bezier(0.2, 0.72, 0.26, 1) both;
+  transform-origin: 50% 0;
+}
+
+/* PART 04: split watermelon pieces */
+[data-action="slice-watermelon"].is-slicing {
+  animation: watermelon-button-split 480ms ease-out both;
+}
+
+.watermelon-game__slices.is-split > span,
+.watermelon-game__slices[data-sliced="true"] > span,
+.is-sliced .watermelon-game__slices > span {
+  animation: watermelon-split 620ms cubic-bezier(0.18, 0.76, 0.28, 1.12) both;
+}
+
+.watermelon-game__slices.is-split > span:nth-child(even),
+.watermelon-game__slices[data-sliced="true"] > span:nth-child(even),
+.is-sliced .watermelon-game__slices > span:nth-child(even) {
+  animation-delay: 70ms;
+  --slice-shift: 10px;
+}
+
+/* PART 05: passing the microphone */
+[data-action="pass-mic"].is-passing,
+[data-action="pass-mic"][data-active="true"] {
+  animation: mic-bounce 540ms cubic-bezier(0.22, 0.76, 0.34, 1.18) both;
+}
+
+[data-mic-bubble].is-speaking,
+[data-mic-bubble][data-active="true"] {
+  animation: speech-pop 360ms ease-out both;
+}
+
+/* PART 06: moon and evening scene */
+.moon-game__track.is-rising > span,
+.moon-game__track.is-night > span,
+.moon-game__track[data-completed="true"] > span {
+  animation: moon-rise 760ms cubic-bezier(0.2, 0.72, 0.28, 1) both;
+}
+
+.moon-game__track.is-night,
+.moon-game__track[data-completed="true"] {
+  transition: background-color 640ms ease, filter 640ms ease;
+  filter: saturate(0.82) brightness(0.76);
+}
+
+/* Shared accordion and stamp feedback */
+.js .plan-card__toggle[aria-expanded="true"] + .plan-card__panel:not([hidden]),
+.plan-card__panel.is-revealing {
+  animation: accordion-reveal 360ms ease-out both;
+  transform-origin: 50% 0;
+}
+
+.stamp[data-completed="true"],
+.stamp.is-completed,
+.plan-card.is-completed .stamp,
+.plan-card[data-completed="true"] .stamp {
+  animation: stamp-pop 420ms cubic-bezier(0.18, 0.9, 0.32, 1.25) both;
 }
 
 .toast:not(:empty) {
   animation: toast-in 220ms ease-out both;
 }
 
-@keyframes stamp-in {
-  from {
-    opacity: 0;
-    scale: 1.5;
-    rotate: -18deg;
-  }
+@keyframes doorbell-wiggle {
+  0%, 100% { rotate: 0deg; }
+  20% { rotate: -11deg; }
+  40% { rotate: 10deg; }
+  62% { rotate: -7deg; }
+  82% { rotate: 4deg; }
+}
 
-  to {
-    opacity: 1;
-    scale: 1;
-    rotate: -5deg;
-  }
+@keyframes host-peek {
+  from { opacity: 0.3; translate: 0 18px; scale: 0.94; }
+  68% { translate: 0 -5px; scale: 1.025; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes sticker-drop {
+  from { opacity: 0; translate: 0 -28px; scale: 1.08; }
+  72% { translate: 0 4px; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes snack-pop {
+  from { opacity: 0; translate: 0 16px; scale: 0.55; rotate: -10deg; }
+  70% { translate: 0 -4px; scale: 1.08; }
+  to { opacity: 1; translate: 0; scale: 1; rotate: 0deg; }
+}
+
+@keyframes topping-drop {
+  from { opacity: 0.55; translate: 0 -14px; scale: 1.12; }
+  70% { translate: 0 3px; scale: 0.98; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes bowl-happy {
+  0%, 100% { translate: 0; rotate: 0deg; }
+  42% { translate: 0 -5px; rotate: -3deg; }
+  68% { rotate: 3deg; }
+}
+
+@keyframes steam-heart {
+  from { opacity: 0; translate: 0 10px; scale: 0.45; }
+  38% { opacity: 1; }
+  to { opacity: 0; translate: 5px -28px; scale: 1.1; }
+}
+
+@keyframes camera-flash {
+  0%, 100% { filter: brightness(1); }
+  35% { filter: brightness(1.85); }
+}
+
+@keyframes flash-overlay {
+  from { opacity: 0.9; }
+  to { opacity: 0; }
+}
+
+@keyframes photo-eject {
+  from { opacity: 0; translate: 0 -22px; scale: 0.92 0.72; }
+  72% { opacity: 1; translate: 0 5px; scale: 1 1.02; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes watermelon-button-split {
+  0%, 100% { translate: 0; rotate: 0deg; }
+  40% { translate: -4px 2px; rotate: -5deg; }
+  66% { translate: 4px -2px; rotate: 5deg; }
+}
+
+@keyframes watermelon-split {
+  from { opacity: 0; translate: calc(-1 * var(--slice-shift, 10px)) 0; scale: 0.7; }
+  70% { opacity: 1; translate: 3px -2px; scale: 1.04; }
+  to { opacity: 1; translate: var(--slice-shift, 0) 0; scale: 1; }
+}
+
+@keyframes mic-bounce {
+  0%, 100% { translate: 0; rotate: 0deg; }
+  36% { translate: 9px -8px; rotate: 11deg; scale: 1.08; }
+  68% { translate: -2px 2px; rotate: -4deg; }
+}
+
+@keyframes speech-pop {
+  from { opacity: 0; translate: -6px 7px; scale: 0.92; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes moon-rise {
+  from { opacity: 0.35; translate: 24px 38px; scale: 0.68; }
+  70% { opacity: 1; translate: -3px -3px; scale: 1.04; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes accordion-reveal {
+  from { opacity: 0; translate: 0 -8px; scale: 1 0.97; }
+  to { opacity: 1; translate: 0; scale: 1; }
+}
+
+@keyframes stamp-pop {
+  from { opacity: 0; scale: 1.5; rotate: -18deg; }
+  to { opacity: 1; scale: 1; rotate: -5deg; }
 }
 
 @keyframes toast-in {
-  from {
-    opacity: 0;
-    translate: 0 10px;
-  }
-
-  to {
-    opacity: 1;
-    translate: 0;
-  }
+  from { opacity: 0; translate: 0 10px; }
+  to { opacity: 1; translate: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -60,6 +300,7 @@
   *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
