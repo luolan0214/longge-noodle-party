@@ -66,6 +66,21 @@ test('illustrated character and sharing assets use local-only SVG files', async 
   }));
 });
 
+test('group photo includes a flattened 1200 by 800 PNG export', async () => {
+  const assetUrl = new URL('../assets/characters/group-photo.png', import.meta.url);
+  const assetPath = fileURLToPath(assetUrl);
+  const assetStats = await stat(assetPath);
+  const png = await readFile(assetPath, { encoding: null });
+
+  assert.equal(assetStats.isFile(), true);
+  assert.deepEqual(
+    [...png.subarray(0, 8)],
+    [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+  );
+  assert.equal(png.readUInt32BE(16), 1200);
+  assert.equal(png.readUInt32BE(20), 800);
+});
+
 test('sharing preview includes a real JPEG export', async () => {
   const assetUrl = new URL('../assets/og/party-preview.jpg', import.meta.url);
   const assetPath = fileURLToPath(assetUrl);
