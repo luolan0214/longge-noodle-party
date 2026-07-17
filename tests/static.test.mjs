@@ -90,6 +90,17 @@ test('plan provides exactly six accessible, fully visible fallback articles', ()
   articles.slice(1).forEach((article) => assert.match(article, /aria-expanded=["']false["']/i));
 });
 
+test('plan uses all six confirmed titles in order', () => {
+  const articles = html.match(/<article\b[\s\S]*?<\/article>/gi) ?? [];
+  const titles = ['到家集合', '龙哥开饭', '咔嚓留念', '水果时间', '麦克风时间', '快乐散场'];
+
+  assert.equal(articles.length, titles.length);
+  titles.forEach((title, index) => {
+    const number = String(index + 1).padStart(2, '0');
+    assert.ok(articles[index].includes(`PART ${number} · ${title}`), `missing PART ${number} title: ${title}`);
+  });
+});
+
 test('all six confirmed plan scenes and stamp copy are present', () => {
   for (const copy of [
     '放下包包，先随便坐！', '零食袋', '糖果罐', '饮料', '水果篮',
