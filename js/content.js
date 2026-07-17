@@ -17,7 +17,7 @@ export const characters = [
     name: '炸酱面主理人',
     role: 'guest',
     arrival: '15:00–16:00',
-    image: 'assets/characters/noodle-cat.png',
+    image: 'assets/characters/noodle-cat.svg',
     accent: '#F5C84C',
   },
   {
@@ -25,7 +25,7 @@ export const characters = [
     name: 'AI Builder、产品负责人',
     role: 'guest',
     arrival: '15:00–16:00',
-    image: 'assets/characters/product-bear.png',
+    image: 'assets/characters/product-bear.svg',
     accent: '#F5B8C1',
   },
   {
@@ -33,7 +33,7 @@ export const characters = [
     name: 'AI Native 连续创业者',
     role: 'guest',
     arrival: '17:00 特别登场',
-    image: 'assets/characters/native-ghosts.png',
+    image: 'assets/characters/native-ghosts.svg',
     accent: '#83A95C',
   },
   {
@@ -41,7 +41,7 @@ export const characters = [
     name: 'AI 运营负责人',
     role: 'guest',
     arrival: '15:00–16:00',
-    image: 'assets/characters/ops-fluffy.png',
+    image: 'assets/characters/ops-fluffy.svg',
     accent: '#E85D4A',
   },
   {
@@ -49,7 +49,7 @@ export const characters = [
     name: '小红书千粉博主',
     role: 'host',
     arrival: '已就位 ✓',
-    image: 'assets/characters/blogger-dog.png',
+    image: 'assets/characters/blogger-dog.svg',
     accent: '#663C2A',
   },
   {
@@ -57,7 +57,7 @@ export const characters = [
     name: '家庭煮夫',
     role: 'host',
     arrival: '已就位 ✓',
-    image: 'assets/characters/home-chef.png',
+    image: 'assets/characters/home-chef.svg',
     accent: '#E98A51',
   },
 ];

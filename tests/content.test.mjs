@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { characters, eventDetails, micLines, parts } from '../js/content.js';
 
 const forbiddenNames = [
@@ -33,6 +35,35 @@ test('character roster uses the six public identities in guest and host order', 
     characters.map((character) => Object.keys(character)),
     Array.from({ length: 6 }, () => ['id', 'name', 'role', 'arrival', 'image', 'accent']),
   );
+});
+
+test('illustrated character and sharing assets use self-contained SVG files', async () => {
+  assert.deepEqual(
+    characters.map(({ image }) => image),
+    [
+      'assets/characters/noodle-cat.svg',
+      'assets/characters/product-bear.svg',
+      'assets/characters/native-ghosts.svg',
+      'assets/characters/ops-fluffy.svg',
+      'assets/characters/blogger-dog.svg',
+      'assets/characters/home-chef.svg',
+    ],
+  );
+
+  const assetPaths = [
+    ...characters.map(({ image }) => image),
+    'assets/characters/group-photo.svg',
+    'assets/og/party-preview.svg',
+    'assets/source/character-sheet.svg',
+  ];
+
+  await Promise.all(assetPaths.map(async (assetPath) => {
+    const assetUrl = new URL(`../${assetPath}`, import.meta.url);
+    const source = await readFile(fileURLToPath(assetUrl), 'utf8');
+
+    assert.match(source, /^<svg\b/);
+    assert.doesNotMatch(source, /(?:href|src)=["'](?:https?:|\/\/)/i);
+  }));
 });
 
 test('plan contains the six confirmed parts with continuous identifiers', () => {

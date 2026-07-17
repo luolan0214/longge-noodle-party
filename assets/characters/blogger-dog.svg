@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="A beige dog blogger wearing round glasses with a laptop and camera">
+  <defs>
+    <linearGradient id="dogFur" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE2A2"/><stop offset="1" stop-color="#EEC37E"/></linearGradient>
+    <linearGradient id="sweater" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A96F4E"/><stop offset="1" stop-color="#7A4935"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#663C2A" flood-opacity=".22"/></filter>
+    <filter id="paper"><feTurbulence baseFrequency=".78" numOctaves="2" seed="31"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .06"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M106 123C64 60 8 100 42 183c-21 31-19 72 4 98-22 25-17 65 10 84 20 14 46 14 65 1-5 41 13 81 48 103 28 17 61 14 83-4 25 20 61 22 90 4 34-22 51-64 43-103 23 14 53 7 68-16 17-26 8-61-16-78 17-32 14-72-7-101 28-78-34-113-72-46-69-34-183-35-252-2Z" fill="#FFF8E9" stroke="#FFF8E9" stroke-width="31" stroke-linejoin="round"/>
+    <g filter="url(#paper)" stroke="#663C2A" stroke-linecap="round" stroke-linejoin="round">
+      <!-- ears behind head -->
+      <path d="M137 113C91 52 42 80 55 145c8 40 36 70 67 60 28-9 38-52 15-92Z" fill="#D8A967" stroke-width="11"/>
+      <path d="M367 113c46-61 95-33 82 32-8 40-36 70-67 60-28-9-38-52-15-92Z" fill="#D8A967" stroke-width="11"/>
+      <!-- body -->
+      <path d="M137 292c-31 31-43 91-25 133 17 40 58 57 91 31 21 28 76 28 98 0 33 26 74 9 91-31 18-42 6-102-25-133Z" fill="url(#dogFur)" stroke-width="10"/>
+      <!-- head -->
+      <path d="M91 168c0-87 63-135 161-135s161 48 161 135c0 92-56 139-161 139S91 260 91 168Z" fill="url(#dogFur)" stroke-width="11"/>
+      <path d="M133 95c24-32 67-48 119-48 53 0 97 16 121 49" fill="none" stroke="#FFF0C8" stroke-width="13" opacity=".8"/>
+      <!-- glasses -->
+      <circle cx="183" cy="166" r="53" fill="#FFF8E9" fill-opacity=".2" stroke-width="11"/>
+      <circle cx="321" cy="166" r="53" fill="#FFF8E9" fill-opacity=".2" stroke-width="11"/>
+      <path d="M236 164c11-9 21-9 32 0m-137-6-38-14m280 14 38-14" fill="none" stroke-width="11"/>
+      <circle cx="187" cy="170" r="13" fill="#663C2A" stroke="none"/>
+      <circle cx="317" cy="170" r="13" fill="#663C2A" stroke="none"/>
+      <circle cx="192" cy="165" r="4" fill="#FFF8E9" stroke="none"/>
+      <circle cx="322" cy="165" r="4" fill="#FFF8E9" stroke="none"/>
+      <!-- muzzle -->
+      <ellipse cx="252" cy="226" rx="61" ry="45" fill="#FFF0C8" stroke-width="6"/>
+      <path d="m252 208-15 10 15 11 15-11Z" fill="#E85D4A" stroke-width="5"/>
+      <path d="M252 229v10m0 0c-17 14-32 6-36-5m36 5c17 14 32 6 36-5" fill="none" stroke-width="7"/>
+      <!-- brown sweater -->
+      <path d="M139 305c30-29 68-40 113-40 46 0 84 11 114 40l-4 145c-55 25-166 25-220 0Z" fill="url(#sweater)" stroke-width="10"/>
+      <path d="M201 278c11 25 91 25 102 0" fill="none" stroke="#FFF0C8" stroke-width="13"/>
+      <path d="M162 337c53-17 126-17 179 0m-170 27c46-14 116-14 162 0" fill="none" stroke="#D8A967" stroke-width="5" opacity=".7"/>
+      <!-- laptop -->
+      <path d="M151 340h202l-15 99H166Z" fill="#83A95C" stroke-width="10"/>
+      <path d="M170 355h165l-10 69H180Z" fill="#DDE8C9" stroke-width="5"/>
+      <circle cx="252" cy="387" r="18" fill="#FFF8E9" stroke-width="5"/>
+      <path d="m244 388 7 7 12-16" fill="none" stroke="#E85D4A" stroke-width="5"/>
+      <path d="M132 439h240l-20 25H152Z" fill="#F5C84C" stroke-width="9"/>
+      <path d="M224 449h56" fill="none" stroke-width="5"/>
+      <!-- paws -->
+      <path d="M151 320c-39 9-53 41-33 62 13 14 35 7 53-8m182-54c39 9 53 41 33 62-13 14-35 7-53-8" fill="url(#dogFur)" stroke-width="10"/>
+      <circle cx="162" cy="374" r="17" fill="#FFE2A2" stroke-width="7"/>
+      <circle cx="342" cy="374" r="17" fill="#FFE2A2" stroke-width="7"/>
+      <!-- small camera -->
+      <path d="M368 282h89v67h-89Z" fill="#E85D4A" stroke-width="9"/>
+      <path d="m388 282 10-18h30l11 18" fill="#F5C84C" stroke-width="8"/>
+      <circle cx="414" cy="316" r="22" fill="#FFF8E9" stroke-width="8"/>
+      <circle cx="414" cy="316" r="10" fill="#83A95C" stroke-width="5"/>
+      <path d="m457 291 18-13v74l-18-13Z" fill="#F5B8C1" stroke-width="7"/>
+      <!-- social sparkles -->
+      <path d="m57 241-26-8m40-20-18-23m393 40 27-9m-42-15 17-24" fill="none" stroke="#F5C84C" stroke-width="8"/>
+      <path d="M73 284c8-17 24-17 32 0-9 15-23 15-32 0Z" fill="#F5B8C1" stroke-width="5"/>
+      <!-- creator notes and camera strap -->
+      <path d="M373 271c-4-22 5-39 23-52 18 12 30 30 34 53" fill="none" stroke="#663C2A" stroke-width="6" stroke-dasharray="4 10"/>
+      <g stroke-width="5">
+        <path d="m49 320 74-8 6 56-74 8Z" fill="#FFF8E9"/>
+        <path d="M67 335h40m-37 13h31m-29 13h42" fill="none"/>
+        <circle cx="112" cy="327" r="6" fill="#E85D4A" stroke="none"/>
+      </g>
+      <path d="M54 399c19 4 34 14 45 31m333-49c17 8 28 21 34 39" fill="none" stroke="#F5B8C1" stroke-width="7"/>
+      <g fill="#F5C84C" stroke="none"><circle cx="48" cy="291" r="6"/><circle cx="470" cy="376" r="7"/><circle cx="456" cy="112" r="6"/></g>
+      <path d="m447 85 7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2Z" fill="#83A95C" stroke-width="5"/>
+    </g>
+  </g>
+</svg>

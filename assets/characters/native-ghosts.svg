@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Three playful little ghosts jumping from colorful cups">
+  <defs>
+    <linearGradient id="ghostWhite" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFDF8"/><stop offset="1" stop-color="#F4E7D2"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#663C2A" flood-opacity=".2"/></filter>
+    <filter id="paper"><feTurbulence baseFrequency=".74" numOctaves="2" seed="23"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .065"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M80 401c-30-25-24-73 7-92-18-36 2-81 42-89-2-53 31-96 78-100 23-63 108-65 137-8 53-3 91 38 90 89 42 14 57 66 27 99 32 25 32 76 1 101 4 39-28 72-66 72H142c-38 0-67-34-62-72Z" fill="#FFF8E9" stroke="#FFF8E9" stroke-width="31" stroke-linejoin="round"/>
+    <g filter="url(#paper)" stroke="#663C2A" stroke-linecap="round" stroke-linejoin="round">
+      <!-- back cup -->
+      <path d="M303 264h139l-18 135c-4 28-104 28-108 0Z" fill="#83A95C" stroke-width="10"/>
+      <ellipse cx="372" cy="264" rx="70" ry="23" fill="#FFF8E9" stroke-width="10"/>
+      <path d="M319 310h107M322 344h100" fill="none" stroke="#FFF8E9" stroke-width="10" opacity=".55"/>
+      <!-- ghost three, right, waving -->
+      <path d="M337 260c-22-15-28-55-16-90 10-32 39-50 69-42 27 8 39 35 37 65l18 34c8 16-5 29-21 22l-18-9-7 33-24-17-25 18Z" fill="url(#ghostWhite)" stroke-width="10"/>
+      <path d="M330 196c-29 1-44-18-35-32 8-12 23-3 35 5m85 31c24-4 38-24 27-36-9-10-22 2-31 11" fill="url(#ghostWhite)" stroke-width="10"/>
+      <circle cx="357" cy="183" r="8" fill="#663C2A" stroke="none"/>
+      <circle cx="393" cy="181" r="8" fill="#663C2A" stroke="none"/>
+      <path d="M357 205c11 14 29 14 39-1" fill="none" stroke-width="7"/>
+      <circle cx="348" cy="202" r="9" fill="#F5B8C1" stroke="none" opacity=".75"/>
+      <circle cx="404" cy="201" r="9" fill="#F5B8C1" stroke="none" opacity=".75"/>
+      <!-- center cup -->
+      <path d="M174 286h161l-20 151c-5 31-116 31-121 0Z" fill="#E85D4A" stroke-width="11"/>
+      <ellipse cx="254" cy="286" rx="81" ry="26" fill="#FFF8E9" stroke-width="11"/>
+      <path d="M193 333h123M198 373h113" fill="none" stroke="#F5C84C" stroke-width="12"/>
+      <circle cx="255" cy="405" r="20" fill="#F5C84C" stroke-width="7"/>
+      <!-- ghost one, center jumping -->
+      <path d="M184 286c-24-19-35-63-21-109 13-42 50-69 91-63 41 6 65 43 60 91l29 42c12 19-8 36-27 24l-24-15-9 46-30-23-31 23-8-42Z" fill="url(#ghostWhite)" stroke-width="11"/>
+      <path d="M174 203c-34-3-55-27-43-43 9-13 29 0 45 14m126 26c31-10 42-37 27-50-12-10-25 7-36 22" fill="url(#ghostWhite)" stroke-width="11"/>
+      <circle cx="220" cy="187" r="9" fill="#663C2A" stroke="none"/>
+      <circle cx="270" cy="184" r="9" fill="#663C2A" stroke="none"/>
+      <path d="M220 212c14 18 39 18 53-2" fill="none" stroke-width="8"/>
+      <path d="m242 212 12 18 13-17" fill="#E85D4A" stroke-width="5"/>
+      <circle cx="204" cy="209" r="11" fill="#F5B8C1" stroke="none" opacity=".7"/>
+      <circle cx="284" cy="206" r="11" fill="#F5B8C1" stroke="none" opacity=".7"/>
+      <!-- left cup -->
+      <path d="M65 296h130l-16 126c-4 27-94 27-99 0Z" fill="#F5C84C" stroke-width="10"/>
+      <ellipse cx="130" cy="296" rx="65" ry="22" fill="#FFF8E9" stroke-width="10"/>
+      <path d="M79 339h102M83 374h94" fill="none" stroke="#E85D4A" stroke-width="10" opacity=".7"/>
+      <!-- ghost two, left leaning -->
+      <path d="M81 294c-19-18-25-55-14-88 10-34 38-54 69-49 32 4 50 33 46 69l24 31c10 15-4 31-19 22l-21-12-8 38-25-19-26 19-7-32Z" fill="url(#ghostWhite)" stroke-width="10"/>
+      <path d="M79 227c-26 4-45-11-39-26 5-12 20-7 35 0m97 20c23-5 38-24 28-36-8-10-22 2-31 12" fill="url(#ghostWhite)" stroke-width="10"/>
+      <circle cx="111" cy="218" r="8" fill="#663C2A" stroke="none"/>
+      <circle cx="148" cy="214" r="8" fill="#663C2A" stroke="none"/>
+      <path d="M109 239c12 13 30 12 40-2" fill="none" stroke-width="7"/>
+      <circle cx="100" cy="235" r="9" fill="#F5B8C1" stroke="none" opacity=".7"/>
+      <circle cx="158" cy="232" r="9" fill="#F5B8C1" stroke="none" opacity=".7"/>
+      <!-- lively confetti -->
+      <path d="m86 135-18-25m44 27 2-31m258-10 4-29m26 42 22-23m18 62 28-7M56 271l-27 4" fill="none" stroke="#E85D4A" stroke-width="8"/>
+      <path d="M138 100c8-15 22-15 31 0-9 13-21 14-31 0Zm197 9c8-15 22-15 31 0-9 13-21 14-31 0Z" fill="#83A95C" stroke-width="5"/>
+      <circle cx="52" cy="193" r="8" fill="#F5C84C" stroke-width="4"/>
+      <circle cx="456" cy="218" r="8" fill="#F5B8C1" stroke-width="4"/>
+      <!-- bubbles, motion trails, and patterned cup details -->
+      <g fill="none" stroke-width="5">
+        <circle cx="83" cy="116" r="12" stroke="#83A95C"/>
+        <circle cx="430" cy="119" r="10" stroke="#F5C84C"/>
+        <circle cx="465" cy="170" r="6" stroke="#E85D4A"/>
+        <path d="M120 437c16 8 33 8 50 0m70 14c18 8 36 8 54 0m58-12c17 8 34 8 50 0" stroke="#FFF8E9"/>
+        <path d="M89 400h82m41 25h86m48-26h64" stroke="#663C2A" opacity=".35"/>
+        <path d="M151 139c-17-18-36-20-54-8m253-22c18-15 36-14 53 1" stroke="#F5B8C1" stroke-dasharray="3 11"/>
+      </g>
+      <g fill="#FFF8E9" stroke="none" opacity=".65"><circle cx="105" cy="322" r="5"/><circle cx="155" cy="353" r="5"/><circle cx="236" cy="323" r="6"/><circle cx="285" cy="351" r="5"/><circle cx="350" cy="302" r="5"/><circle cx="397" cy="345" r="6"/></g>
+    </g>
+  </g>
+</svg>

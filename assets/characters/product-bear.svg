@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="A pink-and-white product bear holding a laptop and sticky notes">
+  <defs>
+    <linearGradient id="pinkShirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFD2D8"/><stop offset="1" stop-color="#F5B8C1"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFF8E9"/><stop offset="1" stop-color="#DDE8C9"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#663C2A" flood-opacity=".2"/></filter>
+    <filter id="paper"><feTurbulence baseFrequency=".8" numOctaves="2" seed="17" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer result="t"><feFuncA type="table" tableValues="0 .06"/></feComponentTransfer><feBlend in="SourceGraphic" in2="t" mode="multiply"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M107 101C81 46 36 60 49 130c-22 29-27 70-12 104-22 19-27 54-12 78 12 19 34 28 55 24-7 37 5 83 34 113 24 26 62 32 91 15 24 21 64 26 94 9 33 14 72 3 92-27 18-27 23-70 14-104 25 0 48-18 54-43 6-24-3-49-22-64 15-37 8-80-17-109 16-72-32-86-66-28-67-38-178-37-247 3Z" fill="#FFF8E9" stroke="#FFF8E9" stroke-width="31" stroke-linejoin="round"/>
+    <g filter="url(#paper)" stroke="#663C2A" stroke-linecap="round" stroke-linejoin="round">
+      <!-- rounded body and ears -->
+      <path d="M144 279c-37 29-52 91-38 141 11 40 42 62 75 45 16-8 24-23 27-38 10 27 69 30 85 0 4 19 16 35 36 40 35 8 64-20 73-58 12-52-6-107-42-132Z" fill="#FFFDF8" stroke-width="10"/>
+      <circle cx="112" cy="129" r="58" fill="#FFFDF8" stroke-width="10"/>
+      <circle cx="388" cy="129" r="58" fill="#FFFDF8" stroke-width="10"/>
+      <circle cx="112" cy="129" r="31" fill="#F5B8C1" stroke-width="7"/>
+      <circle cx="388" cy="129" r="31" fill="#F5B8C1" stroke-width="7"/>
+      <path d="M85 175c0-89 68-137 165-137s166 48 166 137c0 88-55 138-166 138S85 263 85 175Z" fill="#FFFDF8" stroke-width="11"/>
+      <!-- face -->
+      <ellipse cx="184" cy="173" rx="18" ry="25" fill="#663C2A" stroke="none"/>
+      <ellipse cx="316" cy="173" rx="18" ry="25" fill="#663C2A" stroke="none"/>
+      <circle cx="190" cy="165" r="6" fill="#FFF8E9" stroke="none"/>
+      <circle cx="322" cy="165" r="6" fill="#FFF8E9" stroke="none"/>
+      <ellipse cx="250" cy="220" rx="54" ry="42" fill="#FFF0E7" stroke-width="6"/>
+      <path d="m250 205-15 10 15 11 15-11Z" fill="#E85D4A" stroke-width="5"/>
+      <path d="M250 226v11m0 0c-17 15-31 4-33-6m33 6c17 15 31 4 33-6" fill="none" stroke-width="6"/>
+      <circle cx="143" cy="224" r="21" fill="#F5B8C1" stroke="none" opacity=".68"/>
+      <circle cx="357" cy="224" r="21" fill="#F5B8C1" stroke="none" opacity=".68"/>
+      <!-- shirt -->
+      <path d="M139 292c27-26 64-36 111-36s84 10 111 36l-8 148c-47 24-159 24-206 0Z" fill="url(#pinkShirt)" stroke-width="10"/>
+      <path d="M208 272c8 21 75 21 84 0" fill="none" stroke="#FFF8E9" stroke-width="14"/>
+      <g fill="#E85D4A" stroke="none" opacity=".65"><circle cx="230" cy="314" r="8"/><circle cx="251" cy="306" r="8"/><circle cx="272" cy="314" r="8"/><ellipse cx="251" cy="335" rx="19" ry="15"/></g>
+      <!-- arms -->
+      <path d="M150 315c-42 2-60 30-45 57 11 20 35 20 61 4" fill="#FFFDF8" stroke-width="10"/>
+      <path d="M352 315c41 2 60 30 45 57-11 20-35 20-61 4" fill="#FFFDF8" stroke-width="10"/>
+      <!-- floating sticky notes -->
+      <g stroke-width="6">
+        <path d="m58 247 65-16 13 57-66 16Z" fill="#F5C84C"/>
+        <path d="m123 231-5 25 18 32" fill="none" opacity=".35"/>
+        <path d="M74 259h34m-29 13h24" fill="none" stroke-width="5"/>
+        <path d="m381 235 66 13-12 58-66-13Z" fill="#83A95C"/>
+        <path d="m447 248-25 10 13 48" fill="none" opacity=".35"/>
+        <path d="m391 258 32 6m-35 9 25 5" fill="none" stroke-width="5"/>
+      </g>
+      <!-- laptop -->
+      <path d="M153 337h195l-14 102H168Z" fill="url(#screen)" stroke-width="10"/>
+      <path d="M169 353h163l-10 72H179Z" fill="#BFD0A4" stroke-width="5"/>
+      <path d="M185 370h46v15h-46Zm0 26h76v12h-76Zm90-26h39v38h-39Z" fill="#FFF8E9" stroke="none"/>
+      <circle cx="294" cy="389" r="11" fill="#E85D4A" stroke="none"/>
+      <path d="M134 439h232l-19 24H153Z" fill="#F5C84C" stroke-width="9"/>
+      <path d="M221 448h58" fill="none" stroke-width="5"/>
+      <!-- paws and feet -->
+      <circle cx="154" cy="385" r="17" fill="#FFFDF8" stroke-width="7"/>
+      <circle cx="348" cy="385" r="17" fill="#FFFDF8" stroke-width="7"/>
+      <path d="M133 448c14 12 39 11 51-2m135 2c14 12 39 11 51-2" fill="none" stroke-width="6"/>
+      <!-- idea sparks -->
+      <path d="m63 181-27-7m42-25-18-22m374 55 28-6m-42-27 19-22" fill="none" stroke="#F5C84C" stroke-width="8"/>
+      <!-- tiny product workflow cards -->
+      <g stroke-width="5">
+        <path d="m48 337 70-5 4 49-70 5Z" fill="#FFF8E9"/>
+        <circle cx="67" cy="351" r="6" fill="#E85D4A" stroke="none"/>
+        <path d="M80 349h25m-38 17h37" fill="none"/>
+        <path d="m389 330 71 7-5 49-71-7Z" fill="#FFF8E9"/>
+        <path d="m401 351 8 8 15-17" fill="none" stroke="#83A95C"/>
+        <path d="m431 350 15 2m-45 21 39 4" fill="none"/>
+      </g>
+      <path d="M91 318c9-13 21-20 35-22m260 0c15 3 27 11 35 24" fill="none" stroke="#F5B8C1" stroke-width="6" stroke-dasharray="3 12"/>
+    </g>
+  </g>
+</svg>
