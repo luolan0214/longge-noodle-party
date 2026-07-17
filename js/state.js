@@ -1,11 +1,11 @@
-export const PART_IDS = [
+export const PART_IDS = Object.freeze([
   'part-01',
   'part-02',
   'part-03',
   'part-04',
   'part-05',
   'part-06',
-];
+]);
 
 const PART_ID_SET = new Set(PART_IDS);
 

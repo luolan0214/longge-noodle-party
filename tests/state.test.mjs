@@ -10,6 +10,14 @@ import {
   toggleSound,
 } from '../js/state.js';
 
+test('part identifiers cannot be mutated by callers', () => {
+  const originalPartIds = [...PART_IDS];
+
+  assert.equal(Object.isFrozen(PART_IDS), true);
+  assert.throws(() => PART_IDS.push('part-07'), TypeError);
+  assert.deepEqual(PART_IDS, originalPartIds);
+});
+
 test('initial state opens and views only the first invitation part', () => {
   assert.deepEqual(PART_IDS, [
     'part-01',
