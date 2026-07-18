@@ -57,12 +57,34 @@ function fakeElement(properties = {}) {
     ...properties,
     setAttribute(name, value) { attributes.set(name, String(value)); },
     getAttribute(name) { return attributes.get(name) ?? null; },
-    addEventListener(name, listener) { listeners.set(name, listener); },
-    removeEventListener(name) { listeners.delete(name); },
-    dispatch(name, event = {}) {
-      return listeners.get(name)?.({ currentTarget: this, preventDefault() {}, ...event });
+    addEventListener(name, listener) {
+      if (!listeners.has(name)) listeners.set(name, new Set());
+      listeners.get(name).add(listener);
     },
+    removeEventListener(name, listener) { listeners.get(name)?.delete(listener); },
+    dispatch(name, event = {}) {
+      const results = [...(listeners.get(name) ?? [])]
+        .map((listener) => listener({ currentTarget: this, preventDefault() {}, ...event }));
+      if (results.length <= 1) return results[0];
+      return Promise.all(results);
+    },
+    listenerCount(name) { return listeners.get(name)?.size ?? 0; },
   };
+}
+
+function installEventTarget(target) {
+  const listeners = new Map();
+  target.addEventListener = (name, listener) => {
+    if (!listeners.has(name)) listeners.set(name, new Set());
+    listeners.get(name).add(listener);
+  };
+  target.removeEventListener = (name, listener) => listeners.get(name)?.delete(listener);
+  target.emit = (name, event = {}) => {
+    const results = [...(listeners.get(name) ?? [])].map((listener) => listener(event));
+    return results.length <= 1 ? results[0] : Promise.all(results);
+  };
+  target.listenerCount = (name) => listeners.get(name)?.size ?? 0;
+  return target;
 }
 
 function createUiFixture() {
@@ -535,6 +557,75 @@ test('initInvitation reports blocked storage only once while keeping controls us
   controller.complete('part-02');
   assert.equal(fixture.toast.textContent, '无法保存进度，但不影响本次使用');
   assert.equal(controller.getState().openPartId, 'part-02');
+});
+
+test('reinitializing destroys previous bindings so one click updates only once', () => {
+  const fixture = createUiFixture();
+  installEventTarget(fixture.root);
+  fixture.root.dispatchEvent = () => {};
+  fixture.root.documentElement = fakeElement();
+  let writes = 0;
+  const window = {
+    location: { href: 'https://example.test/' },
+    localStorage: {
+      getItem: () => null,
+      setItem: () => { writes += 1; },
+      removeItem() {},
+    },
+    navigator: {},
+    matchMedia: () => ({ matches: false }),
+    CustomEvent: class { constructor(type) { this.type = type; } },
+  };
+
+  const first = initInvitation({ document: fixture.root, window });
+  const second = initInvitation({ document: fixture.root, window });
+
+  assert.equal(typeof first.destroy, 'function');
+  assert.strictEqual(window.partyInvitation, second);
+  assert.equal(fixture.root.listenerCount('click'), 1);
+  assert.equal(fixture.root.listenerCount('party:complete'), 1);
+  assert.equal(fixture.parts[1].toggle.listenerCount('click'), 1);
+  assert.equal(fixture.soundButton.listenerCount('click'), 1);
+
+  fixture.parts[1].toggle.dispatch('click');
+  assert.equal(writes, 1);
+  assert.equal(fixture.parts[1].article.scrollCalls.length, 1);
+});
+
+test('destroy removes invitation listeners and prevents later DOM events from updating state', () => {
+  const fixture = createUiFixture();
+  installEventTarget(fixture.root);
+  fixture.root.dispatchEvent = () => {};
+  fixture.root.documentElement = fakeElement();
+  let writes = 0;
+  const window = {
+    location: { href: 'https://example.test/' },
+    localStorage: {
+      getItem: () => null,
+      setItem: () => { writes += 1; },
+      removeItem() {},
+    },
+    navigator: {},
+    matchMedia: () => ({ matches: false }),
+    CustomEvent: class { constructor(type) { this.type = type; } },
+  };
+  const controller = initInvitation({ document: fixture.root, window });
+  const stateBeforeDestroy = controller.getState();
+
+  assert.equal(typeof controller.destroy, 'function');
+  assert.equal(controller.destroy(), true);
+  assert.equal(controller.destroy(), false);
+  assert.equal(fixture.root.listenerCount('click'), 0);
+  assert.equal(fixture.root.listenerCount('party:complete'), 0);
+  assert.equal(fixture.parts[1].toggle.listenerCount('click'), 0);
+  assert.equal(fixture.soundButton.listenerCount('click'), 0);
+
+  fixture.parts[1].toggle.dispatch('click');
+  fixture.soundButton.dispatch('click');
+  fixture.root.emit('party:complete', { detail: { partId: 'part-02' } });
+  assert.strictEqual(controller.getState(), stateBeforeDestroy);
+  assert.equal(writes, 0);
+  assert.equal(window.partyInvitation, undefined);
 });
 
 test('HTML enables progressive enhancement early while keeping no-JS panels readable', async () => {

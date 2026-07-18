@@ -161,9 +161,17 @@ export function initInvitation(dependencies = {}) {
   const document = dependencies.document ?? globalThis.document;
   const window = dependencies.window ?? globalThis.window;
   if (!document || !window) return null;
+  window.partyInvitation?.destroy?.();
 
   let storage;
   let storageWarningShown = false;
+  let destroyed = false;
+  const cleanups = [];
+  const listen = (target, type, listener, options) => {
+    if (!target?.addEventListener) return;
+    target.addEventListener(type, listener, options);
+    cleanups.push(() => target.removeEventListener?.(type, listener, options));
+  };
   const warnStorageOnce = () => {
     if (storageWarningShown) return;
     storageWarningShown = true;
@@ -206,8 +214,9 @@ export function initInvitation(dependencies = {}) {
     playSound: (effect) => controller.playSound(effect),
   });
   interactions.mount();
+  cleanups.push(() => interactions.destroy());
 
-  bindAccordion(
+  const unbindAccordion = bindAccordion(
     (partId) => {
       const isNewPanel = controller.getState().openPartId !== partId;
       controller.open(partId);
@@ -216,6 +225,7 @@ export function initInvitation(dependencies = {}) {
     document,
     { matchMedia: window.matchMedia?.bind(window) },
   );
+  cleanups.push(unbindAccordion);
 
   const addressElement = document.querySelector('#party-address');
   const address = addressElement?.textContent.trim() ?? eventDetails.address;
@@ -226,12 +236,15 @@ export function initInvitation(dependencies = {}) {
     clipboard: window.navigator?.clipboard,
     document,
   });
-  document.querySelector('[data-action="copy-address"]')?.addEventListener('click', async () => {
+  const copyButton = document.querySelector('[data-action="copy-address"]');
+  const handleCopyAddress = async () => {
     const copied = await copy(address);
     showToast(copied ? '地址已复制' : '复制失败，请手动复制地址', document);
-  });
+  };
+  listen(copyButton, 'click', handleCopyAddress);
 
-  document.querySelector('[data-action="share"]')?.addEventListener('click', async () => {
+  const shareButton = document.querySelector('[data-action="share"]');
+  const handleShare = async () => {
     const result = await shareInvitation(createShareData(window.location.href), {
       share: window.navigator?.share?.bind(window.navigator),
       copy,
@@ -242,17 +255,39 @@ export function initInvitation(dependencies = {}) {
       failed: '分享失败，请复制浏览器地址',
     };
     if (messages[result]) showToast(messages[result], document);
-  });
+  };
+  listen(shareButton, 'click', handleShare);
 
-  document.querySelector('[data-action="toggle-sound"]')?.addEventListener('click', () => {
+  const soundButton = document.querySelector('[data-action="toggle-sound"]');
+  const handleSoundToggle = () => {
     controller.toggleSound();
-  });
-  document.querySelector('[data-action="replay"]')?.addEventListener('click', () => {
+  };
+  listen(soundButton, 'click', handleSoundToggle);
+
+  const replayButton = document.querySelector('[data-action="replay"]');
+  const handleReplay = () => {
     controller.reset();
-  });
-  document.addEventListener?.('party:complete', (event) => {
+  };
+  listen(replayButton, 'click', handleReplay);
+
+  const handlePartComplete = (event) => {
     controller.complete(event.detail?.partId);
-  });
+  };
+  listen(document, 'party:complete', handlePartComplete);
+
+  controller.destroy = () => {
+    if (destroyed) return false;
+    destroyed = true;
+    cleanups.splice(0).reverse().forEach((cleanup) => cleanup());
+    if (window.partyInvitation === controller) {
+      try {
+        delete window.partyInvitation;
+      } catch {
+        window.partyInvitation = undefined;
+      }
+    }
+    return true;
+  };
 
   window.partyInvitation = controller;
   return controller;
