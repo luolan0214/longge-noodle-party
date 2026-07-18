@@ -107,3 +107,20 @@ test('sound control uses the local hand-drawn icon without replacing its label',
     /\.top-tools button\[data-action="toggle-sound"\]\s*\{[^}]*background-image\s*:\s*url\("\.\.\/assets\/icons\/sound\.svg"\)/s,
   );
 });
+
+test('interaction styles target every runtime state class', async () => {
+  const [components, animations] = await Promise.all([
+    read('styles/components.css'),
+    read('styles/animations.css'),
+  ]);
+  const styles = `${components}\n${animations}`;
+
+  for (const state of [
+    'is-ringing', 'is-peeking', 'is-open', 'is-ready', 'is-flashing',
+    'is-ejected', 'is-sliced', 'has-mic', 'is-night', 'is-lit',
+  ]) {
+    assert.match(styles, new RegExp(`\\.${state}\\b`), `missing runtime style for ${state}`);
+  }
+  assert.match(components, /\.moon-game__track\s*\{[^}]*touch-action\s*:\s*pan-y/s);
+  assert.match(animations, /watermelon-take/);
+});

@@ -133,6 +133,10 @@
   filter: drop-shadow(0 5px 0 rgb(255 255 255 / 90%)) drop-shadow(0 7px 3px rgb(102 60 42 / 16%));
 }
 
+.cover__door img.is-peeking {
+  filter: drop-shadow(0 6px 0 var(--color-white)) drop-shadow(0 10px 5px rgb(102 60 42 / 22%));
+}
+
 .cover__door button {
   min-width: var(--touch);
   min-height: var(--touch);
@@ -468,6 +472,32 @@
   font-size: var(--text-sm);
 }
 
+.snack-game.is-open > span {
+  border-color: var(--color-tomato);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sticker);
+}
+
+.noodle-game__toppings.is-ready {
+  padding: var(--space-2);
+  border: 2px dashed var(--color-cucumber-deep);
+  border-radius: var(--radius-md);
+  background: rgb(131 169 92 / 12%);
+}
+
+[data-action="noodle-bowl"].is-ready {
+  background: var(--color-yolk);
+  box-shadow: 0 0 0 3px rgb(232 93 74 / 20%), var(--shadow-pressed);
+}
+
+.noodle-game__steam {
+  display: inline-block;
+  margin-left: var(--space-2);
+  color: var(--color-tomato);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
 .noodle-game__toppings button[aria-pressed="true"] {
   border-color: var(--color-ink);
   color: var(--color-white);
@@ -504,9 +534,36 @@
   object-fit: contain;
 }
 
+.camera-game__photo {
+  width: 100%;
+  margin: 0 0 var(--space-4);
+  border: 8px solid var(--color-white);
+  outline: 2px solid var(--color-ink);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sticker);
+}
+
+.camera-game__photo.is-ejected {
+  display: block;
+  transform-origin: 50% 0;
+}
+
 .watermelon-game__slices > span {
   border-color: var(--color-cucumber);
   background: rgb(232 93 74 / 12%);
+}
+
+.js .watermelon-game__slices > span {
+  opacity: 0;
+}
+
+.js .watermelon-game__slices.is-sliced > span {
+  opacity: 1;
+}
+
+[data-action="slice-watermelon"].is-sliced {
+  color: var(--color-white);
+  background: var(--color-cucumber-deep);
 }
 
 [data-mic-bubble] {
@@ -520,6 +577,11 @@
   font-weight: 800;
 }
 
+.plan-card.has-mic [data-mic-bubble] {
+  border-color: var(--mic-accent, var(--color-tomato));
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--mic-accent, var(--color-tomato)) 28%, transparent);
+}
+
 .moon-game__track {
   position: relative;
   display: grid;
@@ -531,6 +593,7 @@
   align-content: center;
   background: linear-gradient(115deg, var(--color-yolk), #EFA071 55%, var(--color-night));
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .moon-game__track > span {
@@ -546,6 +609,30 @@
   width: 100%;
   min-height: var(--touch);
   accent-color: var(--color-yolk);
+}
+
+.plan-card.is-night .plan-card__panel {
+  color: var(--color-paper-light);
+  background: linear-gradient(150deg, var(--color-night), #243140);
+}
+
+.plan-card.is-night .plan-card__panel button {
+  color: var(--color-ink);
+}
+
+[data-action="door-light"].is-lit {
+  background: var(--color-yolk);
+  box-shadow: 0 0 18px rgb(245 200 76 / 82%), var(--shadow-pressed);
+}
+
+.js [data-door-light-message] {
+  opacity: 0;
+  translate: 0 6px;
+}
+
+.js [data-door-light-message].is-visible {
+  opacity: 1;
+  translate: 0;
 }
 
 .stamp {

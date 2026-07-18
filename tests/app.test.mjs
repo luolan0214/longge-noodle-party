@@ -33,6 +33,14 @@ class FakeClassList {
     else this.names.delete(name);
   }
 
+  add(...names) {
+    names.forEach((name) => this.names.add(name));
+  }
+
+  remove(...names) {
+    names.forEach((name) => this.names.delete(name));
+  }
+
   contains(name) {
     return this.names.has(name);
   }
@@ -419,6 +427,11 @@ test('initInvitation wires map, persistence, controls, and the public completion
   const copyButton = fakeElement();
   const shareButton = fakeElement();
   const replayButton = fakeElement();
+  const snack = fakeElement();
+  const snackButton = fakeElement({
+    dataset: { action: 'open-snack-bag' },
+    closest: () => snackButton,
+  });
   const originalQuerySelector = fixture.root.querySelector.bind(fixture.root);
   const selectors = {
     '#party-address': addressElement,
@@ -427,6 +440,7 @@ test('initInvitation wires map, persistence, controls, and the public completion
     '[data-action="share"]': shareButton,
     '[data-action="replay"]': replayButton,
     '[data-action="toggle-sound"]': fixture.soundButton,
+    '.snack-game': snack,
   };
   fixture.root.querySelector = (selector) => selectors[selector] ?? originalQuerySelector(selector);
   fixture.root.addEventListener = (name, listener) => documentEvents.set(name, listener);
@@ -467,12 +481,17 @@ test('initInvitation wires map, persistence, controls, and the public completion
   assert.strictEqual(window.partyInvitation, controller);
   assert.deepEqual(controller.getState(), createInitialState());
 
+  documentEvents.get('click')({ target: snackButton });
+  assert.deepEqual(controller.getState().completed, ['part-01']);
+  assert.equal(snack.classList.contains('is-open'), true);
+  assert.ok(stored.has(STORAGE_KEY));
+
   fixture.parts[1].toggle.dispatch('click');
   assert.equal(controller.getState().openPartId, 'part-02');
   assert.ok(stored.has(STORAGE_KEY));
 
   documentEvents.get('party:complete')({ detail: { partId: 'part-02' } });
-  assert.deepEqual(controller.getState().completed, ['part-02']);
+  assert.deepEqual(controller.getState().completed, ['part-01', 'part-02']);
 
   await copyButton.dispatch('click');
   assert.deepEqual(copied, [address]);
@@ -487,6 +506,7 @@ test('initInvitation wires map, persistence, controls, and the public completion
 
   replayButton.dispatch('click');
   assert.deepEqual(controller.getState(), createInitialState());
+  assert.equal(snack.classList.contains('is-open'), false);
   assert.deepEqual(removed, [STORAGE_KEY]);
   assert.deepEqual(dispatched, ['party:reset']);
 });

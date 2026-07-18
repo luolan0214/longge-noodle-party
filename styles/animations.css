@@ -28,6 +28,7 @@
 }
 
 .cover__door.is-ringing img,
+.cover__door img.is-peeking,
 .cover__door.is-open img,
 .cover__door[data-welcomed="true"] img {
   animation: host-peek 620ms cubic-bezier(0.2, 0.82, 0.3, 1.15) both;
@@ -123,6 +124,7 @@
   animation: flash-overlay 360ms ease-out both;
 }
 
+.camera-game__photo.is-ejected,
 .camera-game__preview.is-shot,
 .camera-game__preview.is-ejecting,
 .camera-game__preview[data-photo-ready="true"] {
@@ -135,18 +137,33 @@
   animation: watermelon-button-split 480ms ease-out both;
 }
 
+.watermelon-game__slices.is-sliced > span,
 .watermelon-game__slices.is-split > span,
 .watermelon-game__slices[data-sliced="true"] > span,
 .is-sliced .watermelon-game__slices > span {
   animation: watermelon-split 620ms cubic-bezier(0.18, 0.76, 0.28, 1.12) both;
 }
 
+.watermelon-game__slices.is-sliced > span:nth-child(even),
 .watermelon-game__slices.is-split > span:nth-child(even),
 .watermelon-game__slices[data-sliced="true"] > span:nth-child(even),
 .is-sliced .watermelon-game__slices > span:nth-child(even) {
   animation-delay: 70ms;
   --slice-shift: 10px;
 }
+
+.watermelon-game__slices.is-sliced > span.is-taken {
+  animation:
+    watermelon-split 420ms cubic-bezier(0.18, 0.76, 0.28, 1.12) both,
+    watermelon-take 420ms ease-in var(--take-delay, 480ms) forwards;
+}
+
+.watermelon-game__slices.is-sliced > span:nth-child(1) { --take-delay: 480ms; }
+.watermelon-game__slices.is-sliced > span:nth-child(2) { --take-delay: 575ms; }
+.watermelon-game__slices.is-sliced > span:nth-child(3) { --take-delay: 670ms; }
+.watermelon-game__slices.is-sliced > span:nth-child(4) { --take-delay: 765ms; }
+.watermelon-game__slices.is-sliced > span:nth-child(5) { --take-delay: 860ms; }
+.watermelon-game__slices.is-sliced > span:nth-child(6) { --take-delay: 955ms; }
 
 /* PART 05: passing the microphone */
 [data-action="pass-mic"].is-passing,
@@ -170,6 +187,15 @@
 .moon-game__track[data-completed="true"] {
   transition: background-color 640ms ease, filter 640ms ease;
   filter: saturate(0.82) brightness(0.76);
+}
+
+[data-action="door-light"].is-lit,
+.plan-card.has-mic [data-mic-bubble] {
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+[data-door-light-message] {
+  transition: opacity var(--transition-fast), translate var(--transition-fast);
 }
 
 /* Shared accordion and stamp feedback */
@@ -260,6 +286,11 @@
   from { opacity: 0; translate: calc(-1 * var(--slice-shift, 10px)) 0; scale: 0.7; }
   70% { opacity: 1; translate: 3px -2px; scale: 1.04; }
   to { opacity: 1; translate: var(--slice-shift, 0) 0; scale: 1; }
+}
+
+@keyframes watermelon-take {
+  from { opacity: 1; translate: var(--slice-shift, 0) 0; scale: 1; }
+  to { opacity: 0; translate: 24px -18px; scale: 0.55; }
 }
 
 @keyframes mic-bounce {

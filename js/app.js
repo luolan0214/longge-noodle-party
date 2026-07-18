@@ -1,4 +1,5 @@
 import { eventDetails } from './content.js';
+import { createInteractions, createSoundPlayer } from './interactions.js';
 import {
   completePart,
   createInitialState,
@@ -176,6 +177,8 @@ export function initInvitation(dependencies = {}) {
   }
 
   const initialState = storage ? loadState(storage, warnStorageOnce) : createInitialState();
+  let interactions;
+  let soundEffect = () => false;
   const controller = createInvitationController({
     initialState,
     render: (state) => renderState(state, document),
@@ -186,9 +189,23 @@ export function initInvitation(dependencies = {}) {
       if (storage) removeState(storage, warnStorageOnce);
     },
     onReset: () => {
+      interactions?.reset();
       document.dispatchEvent?.(new window.CustomEvent('party:reset'));
     },
+    soundPlayer: (effect) => soundEffect(effect),
   });
+
+  soundEffect = createSoundPlayer({
+    window,
+    getEnabled: () => controller.getState().soundOn,
+  });
+  interactions = createInteractions({
+    root: document,
+    onComplete: (partId) => controller.complete(partId),
+    showToast: (message) => showToast(message, document),
+    playSound: (effect) => controller.playSound(effect),
+  });
+  interactions.mount();
 
   bindAccordion(
     (partId) => {

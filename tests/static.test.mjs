@@ -115,6 +115,10 @@ test('all six confirmed plan scenes and stamp copy are present', () => {
 
   assert.equal((html.match(/\bdata-topping=/g) ?? []).length, 4);
   assert.equal((html.match(/\bdata-photo-character=/g) ?? []).length, 6);
+  assert.match(
+    html,
+    /<img\b(?=[^>]*\bdata-camera-photo\b)(?=[^>]*\bsrc=["']assets\/characters\/group-photo\.png["'])[^>]*>/i,
+  );
   assert.equal((html.match(/\bdata-watermelon-slice=/g) ?? []).length, 6);
   assert.match(html, /<[^>]+\bdata-mic-bubble[^>]*\baria-live=["']polite["'][^>]*>/i);
   assert.match(html, /<input\b[^>]*\btype=["']range["'][^>]*>/i);
