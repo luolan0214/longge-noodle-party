@@ -127,6 +127,37 @@ test('all six confirmed plan scenes and stamp copy are present', () => {
   assert.match(html, /<button\b[^>]*\bdata-action=["']door-light["'][^>]*>/i);
 });
 
+test('farewell scene sends four named guests off while both hosts wave from the doorway', () => {
+  const panel = html.match(/<div\b[^>]*\bid=["']part-06-panel["'][^>]*>[\s\S]*?<\/div>\s*<\/article>/i)?.[0] ?? '';
+  const guests = [
+    ['noodle-cat', '炸酱面主理人'],
+    ['product-bear', 'AI Builder、产品负责人'],
+    ['native-ghosts', 'AI Native 连续创业者'],
+    ['ops-fluffy', 'AI 运营负责人'],
+  ];
+  const hosts = [
+    ['blogger-dog', '小红书千粉博主'],
+    ['home-chef', '家庭煮夫'],
+  ];
+
+  assert.match(panel, /\bclass=["'][^"']*\bfarewell-scene\b/i);
+  assert.equal((panel.match(/\bdata-farewell-role=["']guest["']/gi) ?? []).length, 4);
+  assert.equal((panel.match(/\bdata-farewell-role=["']host["']/gi) ?? []).length, 2);
+  for (const [asset, alt] of [...guests, ...hosts]) {
+    assert.match(
+      panel,
+      new RegExp(`<img\\b(?=[^>]*\\bsrc=["']assets/characters/${asset}\\.svg["'])(?=[^>]*\\balt=["']${alt}["'])[^>]*>`, 'i'),
+    );
+  }
+});
+
+test('cover door includes screen-reader-hidden welcome steam decoration', () => {
+  assert.match(
+    html,
+    /<[^>]+\bclass=["'][^"']*\bwelcome-steam\b[^"']*["'][^>]*\baria-hidden=["']true["'][^>]*>/i,
+  );
+});
+
 test('locked group-photo ending uses the production image and complete copy', () => {
   assert.match(
     html,

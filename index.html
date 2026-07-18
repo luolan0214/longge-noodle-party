@@ -32,7 +32,10 @@
         <time datetime="2026-07-19">2026.07.19 周日</time>
         <div class="cover__door" role="group" aria-label="两位主人在门口等你">
           <img src="assets/characters/blogger-dog.svg" alt="小红书千粉博主">
-          <button type="button" data-action="doorbell" aria-label="按门铃">🔔 按门铃</button>
+          <button type="button" data-action="doorbell" aria-label="按门铃">
+            <span class="welcome-steam" aria-hidden="true"><i></i><i></i><i></i></span>
+            🔔 按门铃
+          </button>
           <img src="assets/characters/home-chef.svg" alt="家庭煮夫">
         </div>
         <p>两位主人已就位，门铃一响就开门。</p>
@@ -175,6 +178,19 @@
           </button>
           <div id="part-06-panel" role="region" aria-labelledby="part-06-button" class="plan-card__panel">
             <p>拖动月亮，把黄昏慢慢送进夜里。</p>
+            <div class="farewell-scene" role="group" aria-label="四位客人离场，两位主人在门口送别">
+              <div class="farewell-scene__guests" role="group" aria-label="挥手离场的四位客人">
+                <figure class="farewell-scene__guest" data-farewell-role="guest"><img src="assets/characters/noodle-cat.svg" alt="炸酱面主理人"></figure>
+                <figure class="farewell-scene__guest" data-farewell-role="guest"><img src="assets/characters/product-bear.svg" alt="AI Builder、产品负责人"></figure>
+                <figure class="farewell-scene__guest" data-farewell-role="guest"><img src="assets/characters/native-ghosts.svg" alt="AI Native 连续创业者"></figure>
+                <figure class="farewell-scene__guest" data-farewell-role="guest"><img src="assets/characters/ops-fluffy.svg" alt="AI 运营负责人"></figure>
+              </div>
+              <span class="farewell-scene__route" aria-hidden="true">再见 ← 平安到家</span>
+              <div class="farewell-scene__doorway" role="group" aria-label="门口送别的两位主人">
+                <figure class="farewell-scene__host" data-farewell-role="host"><img src="assets/characters/blogger-dog.svg" alt="小红书千粉博主"></figure>
+                <figure class="farewell-scene__host" data-farewell-role="host"><img src="assets/characters/home-chef.svg" alt="家庭煮夫"></figure>
+              </div>
+            </div>
             <div class="moon-game__track" data-moon-track="">
               <span aria-hidden="true">🌙</span>
               <input type="range" min="0" max="100" value="0" aria-label="月亮升起进度" data-moon-range>

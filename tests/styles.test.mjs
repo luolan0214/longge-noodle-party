@@ -124,3 +124,30 @@ test('interaction styles target every runtime state class', async () => {
   assert.match(components, /\.moon-game__track\s*\{[^}]*touch-action\s*:\s*pan-y/s);
   assert.match(animations, /watermelon-take/);
 });
+
+test('night state animates farewell guests and hosts without overflowing the scene', async () => {
+  const [components, animations] = await Promise.all([
+    read('styles/components.css'),
+    read('styles/animations.css'),
+  ]);
+
+  assert.match(components, /\.farewell-scene\s*\{(?=[^}]*max-width\s*:\s*100%)(?=[^}]*min-width\s*:\s*0)[^}]*\}/s);
+  assert.match(components, /\.farewell-scene__guests\s*\{[^}]*grid-template-columns\s*:\s*repeat\(4\s*,\s*minmax\(0\s*,\s*1fr\)\)/s);
+  assert.match(animations, /\.plan-card\.is-night\s+\.farewell-scene__guest\s+img\s*\{[^}]*animation\s*:\s*guest-farewell[^}]*\}/s);
+  assert.match(animations, /\.plan-card\.is-night\s+\.farewell-scene__host\s+img\s*\{[^}]*animation\s*:\s*host-goodbye[^}]*\}/s);
+});
+
+test('ringing door reveals one-shot welcome steam with reduced-motion coverage', async () => {
+  const [components, animations] = await Promise.all([
+    read('styles/components.css'),
+    read('styles/animations.css'),
+  ]);
+
+  assert.match(components, /\.welcome-steam\s*\{[^}]*opacity\s*:\s*0[^}]*\}/s);
+  assert.match(
+    animations,
+    /\.cover__door\.is-ringing\s+\.welcome-steam\s*\{[^}]*animation\s*:\s*welcome-steam-rise\s+(?:[1-8]\d{0,2}|900)ms[^}]*\}/s,
+  );
+  assert.doesNotMatch(animations, /welcome-steam-rise[^;}]*\binfinite\b/i);
+  assert.match(animations, /@media\s*\(prefers-reduced-motion\s*:\s*reduce\)/i);
+});

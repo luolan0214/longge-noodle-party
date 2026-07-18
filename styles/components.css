@@ -138,6 +138,7 @@
 }
 
 .cover__door button {
+  position: relative;
   min-width: var(--touch);
   min-height: var(--touch);
   padding: var(--space-2);
@@ -147,6 +148,30 @@
   box-shadow: var(--shadow-pressed);
   font-weight: 900;
 }
+
+.welcome-steam {
+  position: absolute;
+  bottom: calc(100% - 2px);
+  left: 50%;
+  width: 38px;
+  height: 30px;
+  opacity: 0;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.welcome-steam i {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 22px;
+  border-left: 3px solid var(--color-tomato);
+  border-radius: 50%;
+}
+
+.welcome-steam i:nth-child(1) { left: 2px; rotate: -8deg; }
+.welcome-steam i:nth-child(2) { left: 15px; height: 28px; }
+.welcome-steam i:nth-child(3) { right: 0; rotate: 8deg; }
 
 .roster,
 .arrival-notes,
@@ -613,6 +638,80 @@
   background: linear-gradient(115deg, var(--color-yolk), #EFA071 55%, var(--color-night));
   overflow: hidden;
   touch-action: pan-y;
+}
+
+.farewell-scene {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-block: var(--space-4);
+  padding: var(--space-3);
+  border: 2px dashed rgb(102 60 42 / 42%);
+  border-radius: var(--radius-md);
+  grid-template-columns: minmax(0, 1fr) minmax(72px, 0.38fr);
+  align-items: end;
+  gap: var(--space-1) var(--space-2);
+  background: linear-gradient(180deg, rgb(245 200 76 / 22%), rgb(131 169 92 / 18%));
+}
+
+.farewell-scene__guests {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 2px;
+}
+
+.farewell-scene figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.farewell-scene img {
+  display: block;
+  width: 100%;
+  height: clamp(48px, 15vw, 66px);
+  object-fit: contain;
+  transform-origin: 50% 88%;
+}
+
+.farewell-scene__route {
+  min-width: 0;
+  color: var(--color-accent-text);
+  font-size: var(--text-xs);
+  font-weight: 900;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.farewell-scene__doorway {
+  display: grid;
+  min-width: 0;
+  padding: var(--space-2) 3px 0;
+  border: 4px solid var(--color-ink);
+  border-bottom-width: 7px;
+  border-radius: 20px 20px 2px 2px;
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 1px;
+  background: var(--color-sticky-pink);
+  box-shadow: inset 0 0 0 3px var(--color-paper-light);
+}
+
+.farewell-scene__doorway img {
+  height: clamp(52px, 17vw, 74px);
+}
+
+.plan-card.is-night .farewell-scene {
+  border-color: rgb(255 248 232 / 46%);
+  background: linear-gradient(180deg, rgb(56 71 91 / 92%), rgb(36 49 64 / 96%));
+}
+
+.plan-card.is-night .farewell-scene__route {
+  color: var(--color-yolk);
 }
 
 .moon-game__track > span {
