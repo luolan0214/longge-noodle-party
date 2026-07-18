@@ -18,21 +18,15 @@ export function randomChoiceNoRepeat(items, previous, random = Math.random) {
 
 export function createSoundPlayer({ window, getEnabled = () => true } = {}) {
   let context;
+  const lastPlayedAt = new Map();
   const effects = {
     doorbell: [880, 0.09],
     stamp: [620, 0.06],
     camera: [1180, 0.1],
   };
 
-  return (effect = 'stamp') => {
-    if (!getEnabled()) return false;
-    const activation = window?.navigator?.userActivation;
-    if (activation && !activation.isActive && !activation.hasBeenActive) return false;
-    const AudioContext = window?.AudioContext ?? window?.webkitAudioContext;
-    if (!AudioContext) return false;
-
+  function startTone(effect) {
     try {
-      context ??= new AudioContext();
       const oscillator = context.createOscillator();
       const gain = context.createGain();
       const [frequency, duration] = effects[effect] ?? effects.stamp;
@@ -45,6 +39,39 @@ export function createSoundPlayer({ window, getEnabled = () => true } = {}) {
       oscillator.start(start);
       oscillator.stop(start + duration);
       return true;
+    } catch {
+      return false;
+    }
+  }
+
+  return (effect = 'stamp') => {
+    if (!getEnabled()) return false;
+    const activation = window?.navigator?.userActivation;
+    if (activation && !activation.isActive) return false;
+    const AudioContext = window?.AudioContext ?? window?.webkitAudioContext;
+    if (!AudioContext) return false;
+
+    const now = (window?.performance?.now?.() ?? Date.now()) / 1000;
+    const lastPlayed = lastPlayedAt.get(effect);
+    if (lastPlayed !== undefined && now - lastPlayed < 0.08) return false;
+
+    try {
+      context ??= new AudioContext();
+      lastPlayedAt.set(effect, now);
+      if (context.state === 'suspended') {
+        if (typeof context.resume !== 'function') return false;
+        const resumed = context.resume();
+        if (resumed?.then) {
+          Promise.resolve(resumed)
+            .then(() => {
+              if (context.state !== 'suspended') startTone(effect);
+            })
+            .catch(() => {});
+          return true;
+        }
+        if (context.state === 'suspended') return false;
+      }
+      return startTone(effect);
     } catch {
       return false;
     }
@@ -134,6 +161,25 @@ export function createInteractions({
   function openSnack() {
     if (snack?.classList.contains('is-open')) return;
     snack?.classList.add('is-open');
+    const decorations = [
+      ['🍬', '8%', '4%'],
+      ['🍿', '30%', '-12%'],
+      ['🥤', '54%', '2%'],
+      ['🍪', '80%', '-6%'],
+      ['🍎', '14%', '70%'],
+      ['🥜', '56%', '76%'],
+      ['🍭', '86%', '62%'],
+    ];
+    decorations.forEach(([copy, left, top]) => {
+      const sticker = root?.createElement?.('span');
+      if (!sticker) return;
+      sticker.classList.add('snack-game__pop', 'is-popping');
+      sticker.setAttribute('aria-hidden', 'true');
+      sticker.style?.setProperty?.('--snack-left', left);
+      sticker.style?.setProperty?.('--snack-top', top);
+      sticker.textContent = copy;
+      snack?.append?.(sticker);
+    });
     if (completeOnce('part-01')) playSound('stamp');
   }
 
@@ -357,6 +403,7 @@ export function createInteractions({
       doorbell?.classList.remove('is-ringing');
       hosts.forEach((host) => host.classList.remove('is-peeking'));
       snack?.classList.remove('is-open');
+      snack?.querySelectorAll?.('.snack-game__pop').forEach((sticker) => sticker.remove?.());
       toppings.forEach((button) => {
         button.setAttribute('aria-pressed', 'false');
         button.classList.remove('is-added');

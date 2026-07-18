@@ -202,18 +202,125 @@ test('disabled sound does not construct an AudioContext', () => {
   assert.equal(contexts, 0);
 });
 
-test('sound waits when the browser reports no user activation', () => {
+test('sound requires current user activation even after an earlier gesture', () => {
   let contexts = 0;
   const play = createSoundPlayer({
     window: {
       AudioContext: class { constructor() { contexts += 1; } },
-      navigator: { userActivation: { isActive: false, hasBeenActive: false } },
+      navigator: { userActivation: { isActive: false, hasBeenActive: true } },
     },
     getEnabled: () => true,
   });
 
   assert.equal(play('stamp'), false);
   assert.equal(contexts, 0);
+});
+
+test('suspended sound context resumes before creating its oscillator', async () => {
+  let context;
+  let resumeCalls = 0;
+  let oscillators = 0;
+  class AudioContext {
+    constructor() {
+      context = this;
+      this.state = 'suspended';
+      this.currentTime = 2;
+      this.destination = {};
+    }
+
+    resume() {
+      resumeCalls += 1;
+      return Promise.resolve().then(() => { this.state = 'running'; });
+    }
+
+    createOscillator() {
+      oscillators += 1;
+      return {
+        frequency: { setValueAtTime() {} }, connect() {}, start() {}, stop() {},
+      };
+    }
+
+    createGain() {
+      return {
+        gain: { setValueAtTime() {}, exponentialRampToValueAtTime() {} }, connect() {},
+      };
+    }
+  }
+  const play = createSoundPlayer({
+    window: {
+      AudioContext,
+      navigator: { userActivation: { isActive: true } },
+    },
+    getEnabled: () => true,
+  });
+
+  assert.equal(play('doorbell'), true);
+  assert.equal(resumeCalls, 1);
+  assert.equal(oscillators, 0);
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(context.state, 'running');
+  assert.equal(oscillators, 1);
+});
+
+test('sound silently ignores a rejected context resume', async () => {
+  let oscillators = 0;
+  class AudioContext {
+    constructor() {
+      this.state = 'suspended';
+      this.currentTime = 1;
+      this.destination = {};
+    }
+
+    resume() { return Promise.reject(new Error('blocked')); }
+    createOscillator() { oscillators += 1; return {}; }
+  }
+  const play = createSoundPlayer({
+    window: {
+      AudioContext,
+      navigator: { userActivation: { isActive: true } },
+    },
+    getEnabled: () => true,
+  });
+
+  assert.doesNotThrow(() => play('stamp'));
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(oscillators, 0);
+});
+
+test('sound throttles the same effect within 80 milliseconds', () => {
+  let now = 1000;
+  let oscillators = 0;
+  class AudioContext {
+    constructor() { this.currentTime = 3; this.destination = {}; }
+    createOscillator() {
+      oscillators += 1;
+      return {
+        frequency: { setValueAtTime() {} }, connect() {}, start() {}, stop() {},
+      };
+    }
+    createGain() {
+      return {
+        gain: { setValueAtTime() {}, exponentialRampToValueAtTime() {} }, connect() {},
+      };
+    }
+  }
+  const play = createSoundPlayer({
+    window: {
+      AudioContext,
+      performance: { now: () => now },
+      navigator: { userActivation: { isActive: true } },
+    },
+    getEnabled: () => true,
+  });
+
+  assert.equal(play('doorbell'), true);
+  now += 40;
+  assert.equal(play('doorbell'), false);
+  now += 41;
+  assert.equal(play('doorbell'), true);
+  assert.equal(oscillators, 2);
 });
 
 test('enabled sound reuses one AudioContext and gives effects distinct short tones', () => {
@@ -271,16 +378,20 @@ test('mount is idempotent and doorbell gives bounded welcome feedback', () => {
   assert.equal(fixture.snack.children.length, childCount);
 });
 
-test('opening the snack bag completes part 01 once and reset restores it', () => {
+test('opening the snack bag creates bounded decorative stickers once and reset removes them', () => {
   const fixture = createArrivalFixture();
   fixture.interactions.mount();
   const childCount = fixture.snack.children.length;
 
   fixture.root.click(fixture.snackButton);
+  const stickers = fixture.snack.querySelectorAll('.snack-game__pop');
+  assert.ok(stickers.length >= 6 && stickers.length <= 8);
+  assert.equal(stickers.every((sticker) => sticker.getAttribute('aria-hidden') === 'true'), true);
+  assert.equal(fixture.snack.children.length, childCount + stickers.length);
   fixture.root.click(fixture.snackButton);
 
   assert.equal(fixture.snack.classList.contains('is-open'), true);
-  assert.equal(fixture.snack.children.length, childCount);
+  assert.equal(fixture.snack.querySelectorAll('.snack-game__pop').length, stickers.length);
   assert.deepEqual(fixture.completed, ['part-01']);
   assert.deepEqual(fixture.sounds, ['stamp']);
 
@@ -288,6 +399,8 @@ test('opening the snack bag completes part 01 once and reset restores it', () =>
   assert.equal(fixture.snack.classList.contains('is-open'), false);
   assert.equal(fixture.door.classList.contains('is-ringing'), false);
   assert.equal(fixture.hosts.some((host) => host.classList.contains('is-peeking')), false);
+  assert.equal(fixture.snack.querySelectorAll('.snack-game__pop').length, 0);
+  assert.equal(fixture.snack.children.length, childCount);
 
   fixture.root.click(fixture.snackButton);
   assert.deepEqual(fixture.completed, ['part-01', 'part-01']);
