@@ -50,14 +50,23 @@ npm run serve
 ## 发布到 GitHub Pages
 
 1. 在 GitHub 新建一个仓库，新仓库不需预先生成 README。
-2. 在项目根目录关联远程仓库并推送 `main` 分支：
+2. 先将已完成的功能分支快进合并到本地 `main`，确保将要发布的内容已进入主分支：
+
+   ```bash
+   git switch main
+   git merge --ff-only feat/interactive-invitation
+   ```
+
+3. 在项目根目录关联远程仓库并推送 `main` 分支：
 
    ```bash
    git remote add origin https://github.com/<用户名>/<仓库名>.git
    git push -u origin main
    ```
 
-3. 打开 GitHub 仓库的 **Settings → Pages**。
-4. 在 **Build and deployment** 中选择 **Deploy from a branch**。
-5. 选择 `main` 分支和 `/ (root)` 目录，然后保存。
-6. 等待部署完成，访问：`https://<用户名>.github.io/<仓库名>/`
+   如果明确要跳过本地合并、直接将当前分支发布为远程 `main`，可使用 `git push -u origin HEAD:main`。推荐优先完成上述合并流程，便于后续维护分支历史。
+
+4. 打开 GitHub 仓库的 **Settings → Pages**。
+5. 在 **Build and deployment** 中选择 **Deploy from a branch**。
+6. 选择 `main` 分支和 `/ (root)` 目录，然后保存。
+7. 等待部署完成，访问：`https://<用户名>.github.io/<仓库名>/`

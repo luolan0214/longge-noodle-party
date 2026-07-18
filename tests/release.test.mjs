@@ -21,57 +21,148 @@ function filesUnder(relativeDirectory, extension) {
   });
 }
 
+function pngDimensions(buffer) {
+  assert.ok(buffer.length >= 8, 'PNG signature is truncated');
+  assert.deepEqual([...buffer.subarray(0, 8)], [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  let dimensions;
+  let offset = 8;
+  let chunkIndex = 0;
+
+  while (offset < buffer.length) {
+    assert.ok(offset + 8 <= buffer.length, 'PNG chunk header is truncated');
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.subarray(offset + 4, offset + 8).toString('ascii');
+    const chunkEnd = offset + 12 + length;
+    assert.ok(chunkEnd <= buffer.length, `PNG ${type} chunk exceeds file bounds`);
+
+    if (chunkIndex === 0) {
+      assert.equal(type, 'IHDR', 'PNG first chunk must be IHDR');
+      assert.equal(length, 13, 'PNG IHDR length must be 13');
+      dimensions = {
+        width: buffer.readUInt32BE(offset + 8),
+        height: buffer.readUInt32BE(offset + 12),
+      };
+    } else {
+      assert.notEqual(type, 'IHDR', 'PNG must contain exactly one IHDR chunk');
+    }
+
+    offset = chunkEnd;
+    chunkIndex += 1;
+    if (type === 'IEND') {
+      assert.equal(length, 0, 'PNG IEND length must be zero');
+      assert.equal(offset, buffer.length, 'PNG IEND must end at EOF');
+      return dimensions;
+    }
+  }
+
+  assert.fail('PNG is missing IEND');
+}
+
 function jpegDimensions(buffer) {
+  assert.ok(buffer.length >= 4, 'JPEG is truncated');
   assert.deepEqual([...buffer.subarray(0, 2)], [0xff, 0xd8], 'JPEG SOI signature is invalid');
+  assert.deepEqual([...buffer.subarray(-2)], [0xff, 0xd9], 'JPEG EOI marker is missing');
   const startOfFrameMarkers = new Set([
     0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
     0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
   ]);
   let offset = 2;
+  let dimensions;
+  let foundEoi = false;
 
   while (offset < buffer.length) {
+    assert.equal(buffer[offset], 0xff, 'JPEG marker prefix is missing');
     while (buffer[offset] === 0xff) offset += 1;
+    assert.ok(offset < buffer.length, 'JPEG marker is truncated');
     const marker = buffer[offset];
     offset += 1;
-    if (marker === 0xd9 || marker === 0xda) break;
+    assert.notEqual(marker, 0x00, 'JPEG contains a stuffed byte outside scan data');
+    if (marker === 0xd9) {
+      assert.equal(offset, buffer.length, 'JPEG EOI must end at EOF');
+      foundEoi = true;
+      break;
+    }
     if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
     assert.ok(offset + 1 < buffer.length, 'JPEG segment is truncated');
     const length = buffer.readUInt16BE(offset);
     assert.ok(length >= 2 && offset + length <= buffer.length, 'JPEG segment length is invalid');
     if (startOfFrameMarkers.has(marker)) {
-      return {
+      assert.ok(length >= 8, 'JPEG SOF segment is truncated');
+      dimensions = {
         height: buffer.readUInt16BE(offset + 3),
         width: buffer.readUInt16BE(offset + 5),
       };
     }
     offset += length;
+
+    if (marker === 0xda) {
+      while (offset < buffer.length) {
+        if (buffer[offset] !== 0xff) {
+          offset += 1;
+          continue;
+        }
+        const markerOffset = offset;
+        while (buffer[offset] === 0xff) offset += 1;
+        assert.ok(offset < buffer.length, 'JPEG scan marker is truncated');
+        const scanMarker = buffer[offset];
+        if (scanMarker === 0x00 || (scanMarker >= 0xd0 && scanMarker <= 0xd7)) {
+          offset += 1;
+          continue;
+        }
+        offset = markerOffset;
+        break;
+      }
+    }
   }
 
-  assert.fail('JPEG has no supported SOF marker');
+  assert.ok(foundEoi, 'JPEG EOI marker is missing');
+  assert.ok(dimensions, 'JPEG has no supported SOF marker');
+  return dimensions;
 }
 
-test('release sources include the publishing guide and contain no private names or placeholders', () => {
+test('all text published by Pages contains no private names or unfinished markers', () => {
   const protectedNames = [
     [0x8427, 0x7136],
     [0x6f47, 0x7136],
     [0x8096, 0x7136],
   ].map((codePoints) => String.fromCodePoint(...codePoints));
+  const unfinishedWords = ['TO' + 'DO', 'TB' + 'D', 'PLACE' + 'HOLDER'];
+  const unfinishedPattern = new RegExp(`\\b(?:${unfinishedWords.join('|')})\\b`, 'i');
   const sourceFiles = [
     'index.html',
     ...filesUnder('js', '.js'),
     ...filesUnder('styles', '.css'),
+    ...filesUnder('tests', '.mjs'),
+    ...filesUnder('assets', '.svg'),
   ];
 
   assert.ok(existsSync(path.join(root, 'README.md')), 'README.md is required for release');
   sourceFiles.push('README.md');
+  if (existsSync(path.join(root, 'docs'))) sourceFiles.push(...filesUnder('docs', '.md'));
 
   sourceFiles.forEach((relativePath) => {
     const contents = readText(relativePath);
     protectedNames.forEach((name) => {
       assert.equal(contents.includes(name), false, `${relativePath} contains a protected name`);
     });
-    assert.doesNotMatch(contents, /\b(?:TODO|TBD|PLACEHOLDER)\b/i, `${relativePath} contains a placeholder`);
+    assert.doesNotMatch(contents, unfinishedPattern, `${relativePath} contains an unfinished marker`);
   });
+});
+
+test('publishing guide merges the completed feature before pushing main', () => {
+  const readme = readText('README.md');
+  const commands = [
+    'git switch main',
+    'git merge --ff-only feat/interactive-invitation',
+    'git remote add origin',
+    'git push -u origin main',
+  ];
+  const positions = commands.map((command) => readme.indexOf(command));
+
+  positions.forEach((position, index) => {
+    assert.notEqual(position, -1, `README.md is missing ${commands[index]}`);
+  });
+  assert.deepEqual(positions, [...positions].sort((left, right) => left - right));
 });
 
 test('every local HTML src and href is relative and resolves to an existing file', () => {
@@ -120,12 +211,12 @@ test('package.json has no runtime or development dependencies', () => {
 
 test('release raster assets have valid signatures and exact dimensions', () => {
   const png = readFileSync(path.join(root, 'assets/characters/group-photo.png'));
-  assert.deepEqual([...png.subarray(0, 8)], [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-  assert.equal(png.subarray(12, 16).toString('ascii'), 'IHDR');
-  assert.deepEqual({ width: png.readUInt32BE(16), height: png.readUInt32BE(20) }, { width: 1200, height: 800 });
+  assert.deepEqual(pngDimensions(png), { width: 1200, height: 800 });
+  assert.throws(() => pngDimensions(png.subarray(0, -1)), /IEND/);
 
   const jpeg = readFileSync(path.join(root, 'assets/og/party-preview.jpg'));
   assert.deepEqual(jpegDimensions(jpeg), { width: 1200, height: 630 });
+  assert.throws(() => jpegDimensions(jpeg.subarray(0, -2)), /EOI/);
 });
 
 test('production SVG assets are inert, self-contained SVG documents', () => {
@@ -154,7 +245,8 @@ test('map link and all shipped interaction controls are present', () => {
 
   const shippedActions = [
     'doorbell', 'copy-address', 'share', 'toggle-sound', 'replay',
-    'open-snack-bag', 'camera-shutter', 'slice-watermelon', 'pass-mic',
+    'open-snack-bag', 'noodle-bowl', 'camera-shutter', 'save-photo',
+    'retake-photo', 'slice-watermelon', 'pass-mic',
     'moon-keyboard-step', 'door-light',
   ];
   shippedActions.forEach((action) => {
