@@ -463,7 +463,7 @@ test('saving a ready camera photo uses a temporary downloadable link', () => {
   assert.doesNotThrow(() => fixture.root.click(fixture.save));
   assert.equal(fixture.downloadLinks.length, 1);
   assert.equal(fixture.downloadLinks[0].href, 'assets/characters/group-photo.png');
-  assert.equal(fixture.downloadLinks[0].download, '周日面聚会合影.png');
+  assert.equal(fixture.downloadLinks[0].download, '周六面聚会合影.png');
   assert.equal(fixture.downloadLinks[0].clickCount, 1);
   assert.equal(fixture.body.children.length, 0);
 });

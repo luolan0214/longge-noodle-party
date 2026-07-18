@@ -257,7 +257,7 @@ export function createInteractions({
         return;
       }
       link.href = cameraPhoto.src || cameraPhoto.getAttribute?.('src');
-      link.download = '周日面聚会合影.png';
+      link.download = '周六面聚会合影.png';
       root.body.append(link);
       link.click?.();
       link.remove?.();

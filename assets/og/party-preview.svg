@@ -18,18 +18,13 @@
   <path d="m1000 36 137-6 3 45-137 6Z" fill="#F5B8C1" opacity=".82" transform="rotate(5 1070 56)"/>
   <path d="M48 290c29-24 56-24 82 0s53 25 81 0" fill="none" stroke="#83A95C" stroke-width="8" stroke-linecap="round" stroke-dasharray="3 18"/>
 
-  <text x="82" y="160" fill="#663C2A" font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="66" font-weight="900" letter-spacing="2">周日来家里吃面吧！</text>
+  <text x="82" y="160" fill="#663C2A" font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="66" font-weight="900" letter-spacing="2">周六来家里吃面吧！</text>
   <text x="86" y="239" fill="#E85D4A" font-family="ui-rounded, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="40" font-weight="800" letter-spacing="3">龙哥炸酱面 · 好友聚会</text>
 
   <g filter="url(#lift)" transform="rotate(-1 745 440)">
     <path d="M280 285 1162 300 1152 580 289 565Z" fill="#FFFDF7" stroke="#663C2A" stroke-width="5" stroke-dasharray="9 11"/>
     <path d="M298 309c224-26 602-22 838 12" fill="none" stroke="#F5B8C1" stroke-width="10" opacity=".55" stroke-linecap="round"/>
-    <image href="../characters/noodle-cat.svg" x="300" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
-    <image href="../characters/product-bear.svg" x="438" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
-    <image href="../characters/native-ghosts.svg" x="576" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
-    <image href="../characters/ops-fluffy.svg" x="714" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
-    <image href="../characters/blogger-dog.svg" x="852" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
-    <image href="../characters/home-chef.svg" x="990" y="310" width="145" height="220" preserveAspectRatio="xMidYMid meet"/>
+    <image href="../characters/group-photo.png" x="300" y="310" width="838" height="232" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
   <g transform="translate(71 342) rotate(3 92 95)" filter="url(#lift)">

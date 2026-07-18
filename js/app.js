@@ -22,7 +22,7 @@ export function buildMapUrl(baseUrl, address) {
 export function createShareData(url) {
   return {
     title: eventDetails.title,
-    text: '周日一起吃面，打开邀请函看看吧！',
+    text: '周六一起吃面，打开邀请函看看吧！',
     url,
   };
 }

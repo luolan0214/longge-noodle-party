@@ -1,9 +1,9 @@
 const address = '北京市昌平区风雅园一区 15 号楼 1 单元 303';
 
 export const eventDetails = {
-  title: '周日来家里吃面吧！',
-  date: '2026-07-19',
-  dateDisplay: '2026.07.19 周日',
+  title: '周六来家里吃面吧！',
+  date: '2026-07-18',
+  dateDisplay: '2026.07.18 周六',
   generalArrival: '15:00–16:00',
   nativeArrival: '17:00 特别登场',
   address,

@@ -11,9 +11,9 @@ const forbiddenNames = [
 ].map((codePoints) => String.fromCodePoint(...codePoints));
 
 test('event details expose the confirmed invitation information', () => {
-  assert.equal(eventDetails.title, '周日来家里吃面吧！');
-  assert.equal(eventDetails.date, '2026-07-19');
-  assert.equal(eventDetails.dateDisplay, '2026.07.19 周日');
+  assert.equal(eventDetails.title, '周六来家里吃面吧！');
+  assert.equal(eventDetails.date, '2026-07-18');
+  assert.equal(eventDetails.dateDisplay, '2026.07.18 周六');
   assert.equal(eventDetails.generalArrival, '15:00–16:00');
   assert.equal(eventDetails.nativeArrival, '17:00 特别登场');
   assert.equal(eventDetails.address, '北京市昌平区风雅园一区 15 号楼 1 单元 303');

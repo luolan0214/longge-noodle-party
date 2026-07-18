@@ -154,8 +154,8 @@ test('share data has the public title and never includes the private address or 
   const publicShareCopy = JSON.stringify(data);
 
   assert.deepEqual(data, {
-    title: '周日来家里吃面吧！',
-    text: '周日一起吃面，打开邀请函看看吧！',
+    title: '周六来家里吃面吧！',
+    text: '周六一起吃面，打开邀请函看看吧！',
     url,
   });
   assert.equal(publicShareCopy.includes(address), false);

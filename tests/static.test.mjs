@@ -19,7 +19,7 @@ test('document declares Chinese metadata and relative Open Graph artwork', () =>
   assert.match(html, /<html\b[^>]*\blang=["']zh-CN["']/i);
   assert.match(html, /<meta\b[^>]*\bcharset=["']utf-8["']/i);
   assert.match(html, /<meta\b[^>]*\bname=["']viewport["'][^>]*\bcontent=["'][^"']*width=device-width/i);
-  assert.ok(html.includes('<title>周日面聚会邀请</title>'));
+  assert.ok(html.includes('<title>周六面聚会邀请</title>'));
   assert.match(html, openingTagWith('name', 'description'));
   assert.match(html, openingTagWith('name', 'theme-color'));
 
@@ -34,9 +34,9 @@ test('document declares Chinese metadata and relative Open Graph artwork', () =>
 
 test('cover, roster, arrival notes, and address remain readable without JavaScript', () => {
   for (const copy of [
-    '周日来家里吃面吧！',
+    '周六来家里吃面吧！',
     '龙哥炸酱面 · 好友聚会',
-    '2026.07.19 周日',
+    '2026.07.18 周六',
     "TODAY'S GUEST LIST",
     '今日主人组 · 已就位 ✓',
     '大部队：15:00–16:00',
