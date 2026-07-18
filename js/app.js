@@ -1,4 +1,5 @@
 import { eventDetails } from './content.js';
+import { createBackgroundMusic } from './bgm.js';
 import { createInteractions, createSoundPlayer } from './interactions.js';
 import {
   completePart,
@@ -54,6 +55,10 @@ export function removeState(storage, onError = () => {}) {
     onError(error);
     return false;
   }
+}
+
+export function withAutoplaySafeSound(state) {
+  return { ...state, soundOn: false };
 }
 
 export async function copyText(text, dependencies = {}) {
@@ -184,8 +189,10 @@ export function initInvitation(dependencies = {}) {
     warnStorageOnce(error);
   }
 
-  const initialState = storage ? loadState(storage, warnStorageOnce) : createInitialState();
+  const storedState = storage ? loadState(storage, warnStorageOnce) : createInitialState();
+  const initialState = withAutoplaySafeSound(storedState);
   let interactions;
+  let backgroundMusic;
   let soundEffect = () => false;
   const controller = createInvitationController({
     initialState,
@@ -198,12 +205,17 @@ export function initInvitation(dependencies = {}) {
     },
     onReset: () => {
       interactions?.reset();
+      backgroundMusic?.stop();
       document.dispatchEvent?.(new window.CustomEvent('party:reset'));
     },
     soundPlayer: (effect) => soundEffect(effect),
   });
 
   soundEffect = createSoundPlayer({
+    window,
+    getEnabled: () => controller.getState().soundOn,
+  });
+  backgroundMusic = dependencies.backgroundMusic ?? createBackgroundMusic({
     window,
     getEnabled: () => controller.getState().soundOn,
   });
@@ -260,7 +272,9 @@ export function initInvitation(dependencies = {}) {
 
   const soundButton = document.querySelector('[data-action="toggle-sound"]');
   const handleSoundToggle = () => {
-    controller.toggleSound();
+    const state = controller.toggleSound();
+    if (state.soundOn) backgroundMusic.start();
+    else backgroundMusic.stop();
   };
   listen(soundButton, 'click', handleSoundToggle);
 
@@ -279,6 +293,7 @@ export function initInvitation(dependencies = {}) {
     if (destroyed) return false;
     destroyed = true;
     cleanups.splice(0).reverse().forEach((cleanup) => cleanup());
+    backgroundMusic?.destroy();
     if (window.partyInvitation === controller) {
       try {
         delete window.partyInvitation;

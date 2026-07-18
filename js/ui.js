@@ -38,9 +38,9 @@ export function renderState(state, root = globalThis.document) {
   const soundButton = root?.querySelector?.('[data-action="toggle-sound"]');
   if (soundButton) {
     soundButton.setAttribute('aria-pressed', String(state.soundOn));
-    soundButton.setAttribute('aria-label', state.soundOn ? '关闭声音' : '开启声音');
+    soundButton.setAttribute('aria-label', state.soundOn ? '关闭背景音乐' : '开启背景音乐');
     const label = soundButton.querySelector('span');
-    if (label) label.textContent = state.soundOn ? '声音开' : '声音关';
+    if (label) label.textContent = state.soundOn ? '音乐开' : '音乐关';
   }
 }
 

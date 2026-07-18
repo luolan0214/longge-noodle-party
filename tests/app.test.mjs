@@ -12,6 +12,7 @@ import {
   removeState,
   saveState,
   shareInvitation,
+  withAutoplaySafeSound,
 } from '../js/app.js';
 import { createInitialState } from '../js/state.js';
 import { bindAccordion, renderState, showToast } from '../js/ui.js';
@@ -175,6 +176,21 @@ test('storage helpers round-trip encoded state with the versioned key', () => {
   assert.deepEqual(loadState(storage), state);
   assert.equal(removeState(storage), true);
   assert.deepEqual(loadState(storage), createInitialState());
+});
+
+test('reloading keeps invitation progress but resets music to off for autoplay safety', () => {
+  const stored = {
+    ...createInitialState(),
+    openPartId: 'part-04',
+    viewed: ['part-01', 'part-04'],
+    soundOn: true,
+  };
+
+  assert.deepEqual(withAutoplaySafeSound(stored), {
+    ...stored,
+    soundOn: false,
+  });
+  assert.equal(stored.soundOn, true);
 });
 
 test('storage read, write, and remove failures degrade silently and notify the caller', () => {
@@ -352,8 +368,8 @@ test('renderState synchronizes locked photo and muted sound controls', () => {
   assert.equal(fixture.lockCopy.hidden, false);
   assert.equal(fixture.photo.hidden, true);
   assert.equal(fixture.soundButton.getAttribute('aria-pressed'), 'false');
-  assert.equal(fixture.soundButton.getAttribute('aria-label'), '开启声音');
-  assert.equal(fixture.soundLabel.textContent, '声音关');
+  assert.equal(fixture.soundButton.getAttribute('aria-label'), '开启背景音乐');
+  assert.equal(fixture.soundLabel.textContent, '音乐关');
 });
 
 test('renderState reveals unlocked photo and enabled sound controls', () => {
@@ -371,8 +387,8 @@ test('renderState reveals unlocked photo and enabled sound controls', () => {
   assert.equal(fixture.lockCopy.hidden, true);
   assert.equal(fixture.photo.hidden, false);
   assert.equal(fixture.soundButton.getAttribute('aria-pressed'), 'true');
-  assert.equal(fixture.soundButton.getAttribute('aria-label'), '关闭声音');
-  assert.equal(fixture.soundLabel.textContent, '声音开');
+  assert.equal(fixture.soundButton.getAttribute('aria-label'), '关闭背景音乐');
+  assert.equal(fixture.soundLabel.textContent, '音乐开');
 });
 
 test('bindAccordion opens from native button clicks and scrolls smoothly when motion is allowed', () => {
@@ -444,6 +460,7 @@ test('initInvitation wires map, persistence, controls, and the public completion
   const removed = [];
   const documentEvents = new Map();
   const dispatched = [];
+  const musicEvents = [];
   const addressElement = fakeElement({ textContent: address });
   const mapLink = fakeElement({ href: 'https://www.google.com/maps/search/?api=1&query=old' });
   const copyButton = fakeElement();
@@ -497,7 +514,12 @@ test('initInvitation wires map, persistence, controls, and the public completion
     CustomEvent,
   };
 
-  const controller = initInvitation({ document: fixture.root, window });
+  const backgroundMusic = {
+    start() { musicEvents.push('start'); return true; },
+    stop() { musicEvents.push('stop'); return true; },
+    destroy() { musicEvents.push('destroy'); return true; },
+  };
+  const controller = initInvitation({ document: fixture.root, window, backgroundMusic });
 
   assert.equal(new URL(mapLink.href).searchParams.get('query'), address);
   assert.strictEqual(window.partyInvitation, controller);
@@ -525,12 +547,17 @@ test('initInvitation wires map, persistence, controls, and the public completion
 
   fixture.soundButton.dispatch('click');
   assert.equal(controller.getState().soundOn, true);
+  assert.deepEqual(musicEvents, ['start']);
 
   replayButton.dispatch('click');
   assert.deepEqual(controller.getState(), createInitialState());
   assert.equal(snack.classList.contains('is-open'), false);
   assert.deepEqual(removed, [STORAGE_KEY]);
   assert.deepEqual(dispatched, ['party:reset']);
+  assert.deepEqual(musicEvents, ['start', 'stop']);
+
+  controller.destroy();
+  assert.deepEqual(musicEvents, ['start', 'stop', 'destroy']);
 });
 
 test('initInvitation reports blocked storage only once while keeping controls usable', () => {
